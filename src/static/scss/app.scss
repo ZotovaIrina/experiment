@@ -1,0 +1,83 @@
+@import "colors";
+
+$gap: 16px;
+$normal-text: 14px;
+.faux-input {
+  border: 1px solid $smoke;
+  color: $lead;
+  padding: 10px;
+  margin: 0;
+  background: transparent;
+  font-size: $normal-text;
+  display: inline-block;
+}
+
+@import "./colors";
+@font-face {
+  font-family: "Gotham-Bold";
+  src: url('/Gotham-Bold.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham-Light";
+  src: url('/Gotham-Light.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham-Book";
+  src: url('/Gotham-Book.ttf') format('truetype');
+  font-style: normal;
+}
+
+body {
+  font-family: "Gotham-Book";
+  font-size: 14px;
+  color: $lead;
+}
+
+h1 {
+  font-family: "Gotham-Light";
+  font-size: 30px;
+  margin: 0;
+}
+
+h2 {
+  font-family: "Gotham-Book";
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: normal;
+  margin: 0;
+}
+
+h3 {
+  font-family: "Gotham-Book";
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0;
+}
+
+h4 {
+  font-family: "Gotham-Book";
+  font-size: 15px;
+  font-weight: normal;
+  margin: 0;
+}
+
+input {
+  font-family: "Gotham-Book";
+  font-size: 14px;
+}
+
+button {
+  font-family: "Gotham-Book";
+  font-size: 10px;
+}
+
+// TODO: restore underline for links
+a {
+  text-decoration: none;
+  color: $spruce-primary;
+  font-weight: 500; //let them stand out a little bit mb?
+}

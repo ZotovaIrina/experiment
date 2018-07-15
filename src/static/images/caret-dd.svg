@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="6px" viewBox="0 0 11 6" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>Caret</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Styles---Forms" transform="translate(-968.000000, -817.000000)" fill="#4B4B4B">
+            <g id="Components-/-Dropdowns-/-Dropdown-Menu-Copy" transform="translate(642.000000, 784.000000)">
+                <path d="M337,33.6666667 C337,33.8471111 336.931938,34.0033333 336.795813,34.1353333 L331.983313,38.802 C331.847188,38.934 331.686083,39 331.5,39 C331.313917,39 331.152812,38.934 331.016687,38.802 L326.204187,34.1353333 C326.068062,34.0033333 326,33.8471111 326,33.6666667 C326,33.4862222 326.068062,33.33 326.204187,33.198 C326.340312,33.066 326.501417,33 326.6875,33 L336.3125,33 C336.498583,33 336.659688,33.066 336.795813,33.198 C336.931938,33.33 337,33.4862222 337,33.6666667 L337,33.6666667 Z"
+                      id="Caret"
+                      transform="translate(331.500000, 36.000000) scale(1, -1) translate(-331.500000, -36.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

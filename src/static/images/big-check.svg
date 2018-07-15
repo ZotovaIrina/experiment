@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="48px" viewBox="0 0 65 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>big-check</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="R04" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Success-Transition-2" transform="translate(-677.000000, -267.000000)" fill="#63B500" fill-rule="nonzero">
+            <g id="big-check" transform="translate(677.000000, 267.000000)">
+                <path d="M1.48450393,24.2337117 L2.07672494,23.6996424 C2.89646466,22.9595639 4.16091091,23.023999 4.90117202,23.8435738 L19.8139535,40.3534884 L60.5272964,1.03347916 C61.321306,0.266595388 62.5864987,0.288027791 63.3540781,1.08136493 L63.9013904,1.64269023 C64.6694458,2.43651933 64.6485521,3.70267691 63.854723,4.47073234 C63.8544179,4.47102752 63.8541128,4.47132261 63.8538075,4.4716176 L19.5795349,47.252093 L1.34024185,27.0584574 C0.599879096,26.2387399 0.664208816,24.974045 1.48392631,24.2336823 C1.48402749,24.2335909 1.48412867,24.2334995 1.48422987,24.2334081 Z"
+                      id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
