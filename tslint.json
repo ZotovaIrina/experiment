@@ -21,6 +21,7 @@
         "multiline": "always",
         "esSpecCompliant": true
       }
-    ]
+    ],
+    "no-console": [false]
   }
 }

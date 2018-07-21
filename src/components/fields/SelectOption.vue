@@ -10,9 +10,8 @@
                    v-on:click="optionsListTrigger"
                    class="faux-input"/>
             <img :src="caretdd"
-                 :class="{'select-input__select-arrow': hideOptionsList,
-      'select-input__open-list': !hideOptionsList
-      }"/>
+                 class="select-input__select-arrow"
+                 :class="{'select-input__open-list': !hideOptionsList}"/>
         </div>
         <div class="select-input__list-container"
              :class="{'select-input__hide': hideOptionsList}">
@@ -28,48 +27,37 @@
     </div>
 </template>
 
-<script>
-  import caretdd from '../../static/images/caret-dd.svg';
 
-  export default {
-    name: 'SelectOption',
-    props: {
-      options: {
-        default: [],
-        type: Array
-      },
-      inputValue: {
-        default: null,
-        type: String
-      },
-      placeHolder: {
-        default: '',
-        type: String
-      },
-      emptyValue: {
-        default: false,
-        type: Boolean
-      },
-      changeValue: {
-        type: Function
-      }
-    },
-    data() {
-      return {
-        hideOptionsList: true,
-        caretdd
-      };
-    },
-    methods: {
-      optionsListTrigger() {
-        this.hideOptionsList = !this.hideOptionsList;
-      },
-      optionClick(index) {
-        this.optionsListTrigger();
-        this.changeValue(index);
-      }
+<script lang="ts">
+
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+
+    @Component
+    export default class SelectOption extends Vue {
+        @Prop({
+            default() {
+                return ['3', '2'];
+            }
+        }) public options!: string[];
+        @Prop({default: null}) public inputValue!: string;
+        @Prop({default: ''}) public placeHolder!: string;
+        @Prop({default: false}) public emptyValue!: boolean;
+
+        public hideOptionsList: boolean = true;
+
+        public caretdd = require('../../static/images/caret-dd.svg');
+
+        public optionsListTrigger() {
+            this.hideOptionsList = !this.hideOptionsList;
+        }
+
+        public optionClick(newValue: string) {
+            console.log('optionClick', newValue);
+            this.optionsListTrigger();
+            // this.changeValue(index);
+        }
     }
-  };
+
 </script>
 
 <style lang="scss">
@@ -91,6 +79,7 @@
 
         .faux-input {
             z-index: 1;
+            width: 100%;
             cursor: pointer;
             color: transparent;
             text-shadow: 0px 0px 0px black;

@@ -1,52 +1,76 @@
 <template>
     <div class="hello">
-        <h1>{{ msg }}</h1>
-        <h2>
-            {{currentDate.toLocaleString('en-En', options)}}
-        </h2>
-        <calendar :input-date="currentDate"
-                  :set-new-date="setNewDate"/>
+        <!--<h2 v-if="!!currentDate">-->
+        <!--{{currentDate.toLocaleString('en-En', options)}}-->
+        <!--</h2>-->
+        <!--<calendar :input-date="currentDate"-->
+        <!--:set-new-date="setNewDate"/>-->
         <select-option :options="deedDocumentTypes"
-                       :input-value="currentDeedDocumentType"
-                       :change-value="setNewDeedDocumentType"
-                       :empty-value="true"
-                       :place-holder="'Select'"/>
+                       :change-value="setNewDeedDocumentType"/>
     </div>
 </template>
 
-<script>
-  import Calendar from '../components/fields/Calendar';
-  import SelectOption from '../components/fields/SelectOption';
-  import deedDocumentTypes from '../store/enams/deedDocumentType';
+<script lang="ts">
 
-  export default {
-    name: 'HelloWorld',
-    components: {
-      Calendar,
-      SelectOption
-    },
-    data() {
-      return {
-        msg: 'Welcome to Your Vue.js App',
-        options: {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'},
-        deedDocumentTypes
-      };
-    },
-    computed: {
-      currentDate() {
-        return this.$store.state.currentDate;
-      },
-      currentDeedDocumentType() {
-        return this.$store.state.deedDocumentType;
-      }
-    },
-    methods: {
-      setNewDate(newDate) {
-        this.$store.commit('setNewDate', newDate);
-      },
-      setNewDeedDocumentType(newValue) {
-        this.$store.commit('setNewDocumentType', newValue);
-      }
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+    // import Calendar from '../components/fields/Calendar';
+    import HelloWorld from '@/components/HelloWorld.vue';
+    import SelectOption from '@/components/fields/SelectOption.vue';
+    // import deedDocumentTypes, {default as DeedDocumentType} from '../store/enams/DeedDocumentType';
+
+    @Component({
+        components: {SelectOption}
+    })
+    export default class Application extends Vue {
+
+        public setNewDeedDocumentType(newValue: string) {
+            console.log('setNewDeedDocumentType', newValue);
+            // this.$store.commit('setNewDocumentType', newValue);
+        }
+
+        get deedDocumentTypes(): string[] {
+            return ['hello', 'world', 'add'];
+        }
+
+        public currentDeedDocumentType() {
+            return this.$store.state.deedDocumentType;
+        }
+
+
     }
-  };
 </script>
+
+<!--import Calendar from '../components/fields/Calendar';-->
+<!--import SelectOption from '../components/fields/SelectOption';-->
+<!--import deedDocumentTypes, {default as DeedDocumentType} from '../store/enams/DeedDocumentType';-->
+
+<!--export default {-->
+<!--name: 'HelloWorld',-->
+<!--components: {-->
+<!--Calendar,-->
+<!--SelectOption-->
+<!--},-->
+<!--data() {-->
+<!--return {-->
+<!--msg: 'Welcome to Your Vue.js App',-->
+<!--options: {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'},-->
+<!--deedDocumentTypes-->
+<!--};-->
+<!--},-->
+<!--computed: {-->
+<!--currentDate() {-->
+<!--return this.$store.state.currentDate;-->
+<!--},-->
+<!--currentDeedDocumentType() {-->
+<!--return this.$store.state.deedDocumentType;-->
+<!--}-->
+<!--},-->
+<!--methods: {-->
+<!--setNewDate(newDate) {-->
+<!--this.$store.commit('setNewDate', newDate);-->
+<!--},-->
+<!--setNewDeedDocumentType(newValue) {-->
+<!--this.$store.commit('setNewDocumentType', newValue);-->
+<!--}-->
+<!--}-->
+<!--};-->

@@ -5,9 +5,9 @@
                 <img src="../../static/images/caret-back.svg"/>
             </div>
             <div class="calendar__header-text">
-                <select-option :options="monthList"
-                               :input-value="monthList[month]"
-                               :change-value="changeMonth"/>
+                <!--<select-option :options="monthList"-->
+                               <!--:input-value="monthList[month]"-->
+                               <!--:change-value="changeMonth"/>-->
                 <input v-model="year"
                        class="faux-input"/>
             </div>
@@ -41,7 +41,10 @@
     },
 
     props: {
-      inputDate: Date,
+      inputDate: {
+        default: new Date(),
+        type: Date
+      },
       setNewDate: Function
     },
     data() {
