@@ -32,16 +32,15 @@
 
     import {Component, Prop, Vue} from 'vue-property-decorator';
 
-    @Component
+    @Component({
+        props: {
+            inputValue: String,
+            options: Array,
+            placeHolder: String,
+            emptyValue: Boolean
+        }
+    })
     export default class SelectOption extends Vue {
-        @Prop({
-            default() {
-                return ['3', '2'];
-            }
-        }) public options!: string[];
-        @Prop({default: null}) public inputValue!: string;
-        @Prop({default: ''}) public placeHolder!: string;
-        @Prop({default: false}) public emptyValue!: boolean;
 
         public hideOptionsList: boolean = true;
 

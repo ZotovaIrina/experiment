@@ -5,8 +5,9 @@
         <!--</h2>-->
         <!--<calendar :input-date="currentDate"-->
         <!--:set-new-date="setNewDate"/>-->
-        <select-option :options="deedDocumentTypes"
-                       :change-value="setNewDeedDocumentType"/>
+        <SelectOption :options="getDeedDocuments"
+                      :input-value="currentDeedDocumentType"
+                      :change-value="setNewDeedDocumentType"/>
     </div>
 </template>
 
@@ -16,7 +17,7 @@
     // import Calendar from '../components/fields/Calendar';
     import HelloWorld from '@/components/HelloWorld.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
-    // import deedDocumentTypes, {default as DeedDocumentType} from '../store/enams/DeedDocumentType';
+    import deedDocumentTypes, {default as DeedDocumentType, DeedDocumentEnum} from '../store/enams/DeedDocumentType';
 
     @Component({
         components: {SelectOption}
@@ -28,12 +29,13 @@
             // this.$store.commit('setNewDocumentType', newValue);
         }
 
-        get deedDocumentTypes(): string[] {
-            return ['hello', 'world', 'add'];
+        get getDeedDocuments(): string[] {
+            return Object.keys(DeedDocumentEnum).map(key => DeedDocumentEnum[key]);
         }
 
-        public currentDeedDocumentType() {
-            return this.$store.state.deedDocumentType;
+        get currentDeedDocumentType(): string {
+            // return this.$store.getters.getDeedDocumentType.valueOf();
+            return this.$store.getters.getDeedDocumentType.toString();
         }
 
 
