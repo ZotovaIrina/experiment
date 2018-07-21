@@ -7,7 +7,7 @@
         <!--:set-new-date="setNewDate"/>-->
         <SelectOption :options="getDeedDocuments"
                       :input-value="currentDeedDocumentType"
-                      :change-value="setNewDeedDocumentType"/>
+                      @changeValue="setNewDeedDocumentType"/>
     </div>
 </template>
 
@@ -25,12 +25,11 @@
     export default class Application extends Vue {
 
         public setNewDeedDocumentType(newValue: string) {
-            console.log('setNewDeedDocumentType', newValue);
-            // this.$store.commit('setNewDocumentType', newValue);
+            this.$store.commit('setNewDocumentType', newValue);
         }
 
         get getDeedDocuments(): string[] {
-            return Object.keys(DeedDocumentEnum).map(key => DeedDocumentEnum[key]);
+            return Object.keys(DeedDocumentEnum).map((key) => DeedDocumentEnum[key as any]);
         }
 
         get currentDeedDocumentType(): string {

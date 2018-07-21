@@ -51,9 +51,8 @@
         }
 
         public optionClick(newValue: string) {
-            console.log('optionClick', newValue);
             this.optionsListTrigger();
-            // this.changeValue(index);
+            this.$emit('changeValue', newValue);
         }
     }
 
