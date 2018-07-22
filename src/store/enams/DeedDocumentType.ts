@@ -6,7 +6,3 @@ export enum DeedDocumentEnum {
     warranty_deed = 'Warranty Deed',
     other = 'Other'
 }
-
-type DeedDocumentType = DeedDocumentEnum | null;
-
-export default DeedDocumentType;

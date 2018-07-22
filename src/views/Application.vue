@@ -17,7 +17,7 @@
     // import Calendar from '../components/fields/Calendar';
     import HelloWorld from '@/components/HelloWorld.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
-    import deedDocumentTypes, {default as DeedDocumentType, DeedDocumentEnum} from '../store/enams/DeedDocumentType';
+    import {DeedDocumentEnum} from '../store/enams/DeedDocumentType';
 
     @Component({
         components: {SelectOption}
@@ -25,16 +25,15 @@
     export default class Application extends Vue {
 
         public setNewDeedDocumentType(newValue: string) {
-            this.$store.commit('setNewDocumentType', newValue);
+            this.$store.dispatch('setNewDocumentType', newValue);
         }
 
         get getDeedDocuments(): string[] {
-            return Object.keys(DeedDocumentEnum).map((key) => DeedDocumentEnum[key as any]);
+            return this.$store.getters.getDeedDocumentTypes;
         }
 
         get currentDeedDocumentType(): string {
-            // return this.$store.getters.getDeedDocumentType.valueOf();
-            return this.$store.getters.getDeedDocumentType.toString();
+            return this.$store.getters.getDeedDocumentType;
         }
 
 
