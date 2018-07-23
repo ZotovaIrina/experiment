@@ -7,6 +7,8 @@
         <!--:set-new-date="setNewDate"/>-->
         <SelectOption :options="getDeedDocumentTypes"
                       :input-value="getDeedDocumentType"
+                      :empty-value="true"
+                      :place-holder="'Select'"
                       @changeValue="setNewDeedDocumentType"/>
     </div>
 </template>
@@ -24,9 +26,9 @@
     export default class Application extends Vue {
         @Getter public getDeedDocumentTypes: string[];
         @Getter public getDeedDocumentType: string;
-        @Action public setNewDocumentType: (newValue: string) => void;
+        @Action public setNewDocumentType: (newValue: string | null) => void;
 
-        public setNewDeedDocumentType(newValue: string) {
+        public setNewDeedDocumentType(newValue: string | null) {
             this.setNewDocumentType(newValue);
         }
 

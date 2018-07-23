@@ -112,11 +112,13 @@
             font-size: $normal-text;
             padding: 8px 14px;
             height: $normal-text;
+            text-align: start;
         }
 
         &__placeholder {
             font-family: "Gotham-Book";
             font-size: $normal-text;
+            text-align: start;
             color: $grey;
             padding: 8px 14px;
             height: $normal-text;

@@ -1,21 +1,27 @@
 import {GetterTree, MutationTree, ActionTree, ActionContext} from 'vuex';
-import {DeedDocumentEnum} from '@/store/enams/DeedDocumentType';
+import {DeedDocumentEnum} from '@/store/types/DeedDocumentType';
+import {USState} from '@/store/types/USState';
 
 interface SearchReportType {
     currentDate: Date | null;
     deedDocumentTypes: string[];
     deedDocumentType: DeedDocumentEnum | null;
+    states: string[];
+    state: USState | null;
 }
 
 const searchReportState: SearchReportType = {
     currentDate: new Date(),
     deedDocumentTypes: Object.keys(DeedDocumentEnum).map((key) => DeedDocumentEnum[key as any]),
-    deedDocumentType: DeedDocumentEnum.certificate_of_title
+    deedDocumentType: null,
+    states: Object.keys(USState),
+    state: null
 };
 
 const gettersSearchReport: GetterTree<SearchReportType, any> = {
     getDeedDocumentTypes: (state: SearchReportType) => state.deedDocumentTypes,
-    getDeedDocumentType: (state: SearchReportType) => state.deedDocumentType
+    getDeedDocumentType: (state: SearchReportType) => state.deedDocumentType,
+    getStates: (state: SearchReportType) => state.states
 };
 
 const mutationsSearchReport: MutationTree<any> = {
