@@ -52,6 +52,7 @@
 
         public optionClick(newValue: string) {
             this.optionsListTrigger();
+            console.log('emit', newValue);
             this.$emit('changeValue', newValue);
         }
     }

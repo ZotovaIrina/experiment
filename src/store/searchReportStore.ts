@@ -11,7 +11,7 @@ interface SearchReportType {
 }
 
 const searchReportState: SearchReportType = {
-    currentDate: new Date(),
+    currentDate: null,
     deedDocumentTypes: Object.keys(DeedDocumentEnum).map((key) => DeedDocumentEnum[key as any]),
     deedDocumentType: null,
     states: Object.keys(USState),
@@ -19,6 +19,7 @@ const searchReportState: SearchReportType = {
 };
 
 const gettersSearchReport: GetterTree<SearchReportType, any> = {
+    getCurrentDate: (state: SearchReportType) => state.currentDate,
     getDeedDocumentTypes: (state: SearchReportType) => state.deedDocumentTypes,
     getDeedDocumentType: (state: SearchReportType) => state.deedDocumentType,
     getStates: (state: SearchReportType) => state.states,
