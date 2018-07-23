@@ -44,16 +44,13 @@
     export default class Calendar extends Vue {
         @Prop({
             default() {
-                return new Date;
+                return new (Date)();
             }
         }) public inputDate!: Date;
 
         public month: number = this.inputDate.getMonth();
         public year: number = this.inputDate.getFullYear();
         public day: number = this.inputDate.getDate();
-        public firstDayWeakInMonth() {
-            return new Date(this.year, this.month, 1).getDay();
-        }
 
         private monthList = [
             'January',
@@ -80,8 +77,11 @@
             'SAT'
         ];
 
+        public firstDayWeakInMonth() {
+            return new Date(this.year, this.month, 1).getDay();
+        }
+
         public getListOfDays() {
-            console.log('firstDayWeakInMonth', this.firstDayWeakInMonth());
             let day: Date;
             const days: number[] = [];
             for (let i = 1; i <= 28; i++) {
@@ -97,7 +97,6 @@
         }
 
         public changeMonth(monthName: string) {
-            console.log('changeMonth', monthName);
             const month = this.monthList.indexOf(monthName);
             switch (month) {
                 case 12:
@@ -119,8 +118,13 @@
                 day === this.inputDate.getDate();
         }
 
-        public setValue(day: number) {
-            this.$emit('setNewDate', new Date(this.year, this.month, day));
+        public setValue(day: number | null) {
+            if (day === null) {
+                this.$emit('setNewDate', null);
+            } else {
+                this.$emit('setNewDate', new Date(this.year, this.month, day));
+            }
+
         }
 
     }
