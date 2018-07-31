@@ -105,13 +105,13 @@
         }
 
         public setValue(day: number, month: number) {
-            console.log('setValue', DateTime.local(this.year, month + 1, day).toISODate());
-            // this.$emit('setNewDate', DateTime.local(this.year, month, day).toISODate());
+            console.log('setValue', DateTime.local(this.year, month, day).toISODate());
+            this.$emit('setNewDate', DateTime.local(this.year, month, day).toISODate());
         }
 
         get getNewValues() {
             if (DateTime.fromISO(this.inputDate).isValid) {
-                return DateTime.fromISO(this.inputDate)
+                return DateTime.fromISO(this.inputDate);
             } else {
                 return DateTime.local();
             }
@@ -141,6 +141,13 @@
         get firstDayWeakInMonth(): number {
             console.log('firstDayWeakInMonth');
             return DateTime.local(this.year, this.month + 1, 1).weekday;
+        }
+
+
+        @Watch('inputDate')
+        private onPropChange() {
+            this.month = this.getNewValues.month - 1;
+            this.year = this.getNewValues.year;
         }
     }
 

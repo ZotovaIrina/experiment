@@ -11,7 +11,8 @@
                  @click="calendarShowTrigger"/>
         </div>
         <Calendar v-if="showCalendar"
-        :input-date="inputDate"/>
+                  :input-date="inputDate"
+                  @setNewDate="setValue"/>
     </div>
 </template>
 
@@ -43,15 +44,17 @@
             this.showCalendar = !this.showCalendar;
         }
 
-        private setValue(date: string | null) {
+        public setValue(date: string | null) {
+            console.log('setValue inside');
             if (date === null) {
                 this.$emit('setNewDate', null);
             } else {
-                this.$emit('setNewDate', DateTime.fromFormat(date, 'MM/dd/yyyy').toISODate());
+                this.$emit('setNewDate', date);
             }
         }
 
         get getNewValues() {
+            console.log('getNewValues');
             if (DateTime.fromISO(this.inputDate).isValid) {
                 return DateTime.fromISO(this.inputDate).toFormat('MM/dd/yyyy');
             } else {
@@ -59,10 +62,14 @@
             }
         }
 
+        @Watch('inputDate') private onPropChange() {
+            this.inputValue = this.getNewValues;
+        }
+
         @Watch('inputValue')
         private onChangeInput() {
             if (this.inputValue !== null && DateTime.fromFormat(this.inputValue, 'MM/dd/yyyy').isValid) {
-                this.setValue(this.inputValue);
+                this.setValue(DateTime.fromFormat(this.inputValue, 'MM/dd/yyyy').toISODate());
             }
         }
 

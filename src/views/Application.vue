@@ -5,7 +5,7 @@
             {{getCurrentDate.toLocaleString('en-En', options)}}
         </h2>
         <CalendarInput @setNewDate="setCurrentDate"
-        :input-date="getCurrentDate"/>
+                       :input-date="getCurrentDate"/>
         <SelectOption :options="getDeedDocumentTypes"
                       :input-value="getDeedDocumentType"
                       :empty-value="true"
