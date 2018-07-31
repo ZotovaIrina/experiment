@@ -3,7 +3,7 @@ import {DeedDocumentEnum} from '@/store/types/DeedDocumentType';
 import {USState} from '@/store/types/USState';
 
 interface SearchReportType {
-    currentDate: Date | null;
+    currentDate: string | null;
     deedDocumentTypes: string[];
     deedDocumentType: DeedDocumentEnum | null;
     states: string[];
@@ -32,6 +32,9 @@ const mutationsSearchReport: MutationTree<any> = {
     },
     setNewState: (state, payload: USState | null) => {
         searchReportState.state = payload;
+    },
+    setCurrentDate: (state, payload: string | null) => {
+        searchReportState.currentDate = payload;
     }
 };
 
@@ -50,6 +53,9 @@ const actionsSearchReport: ActionTree<SearchReportType, any> = {
             newState = USState[payload];
         }
         searchReportStore.commit('setNewState', newState);
+    },
+    setCurrentDate: (searchReportStore: ActionContext<SearchReportType, any>, payload: string) => {
+        searchReportStore.commit('setCurrentDate', payload);
     }
 };
 

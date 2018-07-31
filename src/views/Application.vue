@@ -1,9 +1,11 @@
 <template>
     <div class="hello">
+        <h2>Date time: {{dateTime}}</h2>
         <h2 v-if="!!getCurrentDate">
             {{getCurrentDate.toLocaleString('en-En', options)}}
         </h2>
-        <Calendar />
+        <CalendarInput @setNewDate="setCurrentDate"
+        :input-date="getCurrentDate"/>
         <SelectOption :options="getDeedDocumentTypes"
                       :input-value="getDeedDocumentType"
                       :empty-value="true"
@@ -21,18 +23,19 @@
 
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {Getter, Action} from 'vuex-class';
-    import Calendar from '@/components/fields/Calendar.vue';
+    import CalendarInput from '@/components/fields/CalendarInput.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
     import {USState} from '../store/types/USState';
 
     @Component({
         components: {
             SelectOption,
-            Calendar
+            CalendarInput
         }
     })
     export default class Application extends Vue {
-        @Getter public getCurrentDate: Date;
+        @Getter public getCurrentDate: string | null;
+        @Action public setCurrentDate: string | null;
         @Getter public getDeedDocumentTypes: string[];
         @Getter public getDeedDocumentType: string;
         @Action public setNewDocumentType: (newValue: string | null) => void;
@@ -41,6 +44,8 @@
         @Action public setNewState: (newValue: string | null) => void;
 
         public options = {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'};
+
+        public dateTime = 'date';
 
         public setNewDeedDocumentType(newValue: string | null) {
             this.setNewDocumentType(newValue);

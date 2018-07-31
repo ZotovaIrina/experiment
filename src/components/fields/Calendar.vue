@@ -6,7 +6,7 @@
             </div>
             <div class="calendar__header-text">
                 <SelectOption :options="monthList"
-                              :input-value="monthList[month]"
+                              :input-value="getMonthName"
                               @changeValue="changeMonth"/>
                 <input v-model="year"
                        class="faux-input"/>
@@ -21,9 +21,9 @@
                  class="calendar__weak-day">
                 {{day}}
             </div>
-            <div v-for="n in firstDayWeakInMonth()"></div>
-            <div v-for="day in getListOfDays()"
-                 v-on:click="setValue(day)"
+            <div v-for="n in firstDayWeakInMonth"></div>
+            <div v-for="day in getListOfDays"
+                 v-on:click="setValue(day, month + 1)"
                  v-bind:class="{calendar__selected: isSelectedDay(day)}"
                  class="calendar__day">
                 {{day}}
@@ -33,8 +33,9 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import SelectOption from '@/components/fields/SelectOption.vue';
+    import {DateTime} from 'luxon';
 
     @Component({
         components: {
@@ -44,13 +45,21 @@
     export default class Calendar extends Vue {
         @Prop({
             default() {
-                return new (Date)();
+                return null;
             }
-        }) public inputDate!: Date;
+        }) public inputDate!: string;
 
-        public month: number = this.inputDate.getMonth();
-        public year: number = this.inputDate.getFullYear();
-        public day: number = this.inputDate.getDate();
+        public month: number = this.getNewValues.month - 1;
+        public year: number = this.getNewValues.year;
+        public weakDaysList = [
+            'SUN',
+            'MON',
+            'TUE',
+            'WED',
+            'THU',
+            'FRI',
+            'SAT'
+        ];
 
         private monthList = [
             'January',
@@ -66,35 +75,6 @@
             'November',
             'December'
         ];
-
-        private weakDaysList = [
-            'SUN',
-            'MON',
-            'TUE',
-            'WED',
-            'THU',
-            'FRI',
-            'SAT'
-        ];
-
-        public firstDayWeakInMonth() {
-            return new Date(this.year, this.month, 1).getDay();
-        }
-
-        public getListOfDays() {
-            let day: Date;
-            const days: number[] = [];
-            for (let i = 1; i <= 28; i++) {
-                days.push(i);
-            }
-            for (let i = 29; i <= 31; i++) {
-                day = new Date(this.year, this.month, (i));
-                if (day.getMonth() === this.month) {
-                    days.push(day.getDate());
-                }
-            }
-            return days;
-        }
 
         public changeMonth(monthName: string) {
             const month = this.monthList.indexOf(monthName);
@@ -113,20 +93,55 @@
         }
 
         public isSelectedDay(day: number) {
-            return this.year === this.inputDate.getFullYear() &&
-                this.month === this.inputDate.getMonth() &&
-                day === this.inputDate.getDate();
-        }
-
-        public setValue(day: number | null) {
-            if (day === null) {
-                this.$emit('setNewDate', null);
+            if (this.inputDate === null) {
+                return this.year === DateTime.local().year &&
+                    this.month === DateTime.local().month - 1 &&
+                    day === DateTime.local().day;
             } else {
-                this.$emit('setNewDate', new Date(this.year, this.month, day));
+                return this.year === DateTime.fromISO(this.inputDate).year &&
+                    this.month === DateTime.fromISO(this.inputDate).month - 1 &&
+                    day === DateTime.fromISO(this.inputDate).day;
             }
-
         }
 
+        public setValue(day: number, month: number) {
+            console.log('setValue', DateTime.local(this.year, month + 1, day).toISODate());
+            // this.$emit('setNewDate', DateTime.local(this.year, month, day).toISODate());
+        }
+
+        get getNewValues() {
+            if (DateTime.fromISO(this.inputDate).isValid) {
+                return DateTime.fromISO(this.inputDate)
+            } else {
+                return DateTime.local();
+            }
+        }
+
+        get getListOfDays() {
+            console.log('this.month', this.month);
+            let day: DateTime;
+            const days: number[] = [];
+            for (let i = 1; i <= 28; i++) {
+                days.push(i);
+            }
+            for (let i = 29; i <= 31; i++) {
+                day = DateTime.local(this.year, this.month + 1, (i));
+                if (day.month - 1 === this.month) {
+                    days.push(day.day);
+                }
+            }
+            return days;
+        }
+
+        get getMonthName() {
+            console.log('getMonthName');
+            return this.monthList[this.month];
+        }
+
+        get firstDayWeakInMonth(): number {
+            console.log('firstDayWeakInMonth');
+            return DateTime.local(this.year, this.month + 1, 1).weekday;
+        }
     }
 
 </script>

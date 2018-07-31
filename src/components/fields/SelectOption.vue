@@ -4,7 +4,7 @@
              :class="{'select-input__hide': hideOptionsList}"
              v-on:click="optionsListTrigger"></div>
 
-        <div class="input_cell__input-error-container">
+        <div class="input-error-container">
             <input :placeholder="placeHolder"
                    :value="inputValue"
                    v-on:click="optionsListTrigger"
@@ -74,18 +74,6 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-        }
-
-        .faux-input {
-            z-index: 1;
-            width: 100%;
-            cursor: pointer;
-            color: transparent;
-            text-shadow: 0px 0px 0px black;
-        }
-
-        .faux-input::placeholder {
-            text-shadow: none;
         }
 
         .placeholder {
