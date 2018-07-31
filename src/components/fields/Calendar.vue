@@ -1,32 +1,34 @@
 <template>
-    <div class="calendar__container">
-        <div class="calendar__header">
-            <div v-on:click="changeMonth(monthList[month-1])">
-                <img src="../../static/images/caret-back.svg"/>
+    <div class="calendar__substrate">
+        <div class="calendar__container">
+            <div class="calendar__header">
+                <div v-on:click="changeMonth(monthList[month-1])">
+                    <img src="../../static/images/caret-back.svg"/>
+                </div>
+                <div class="calendar__header-text">
+                    <SelectOption :options="monthList"
+                                  :input-value="getMonthName"
+                                  @changeValue="changeMonth"/>
+                    <input v-model="year"
+                           class="faux-input"/>
+                </div>
+                <div v-on:click="changeMonth(monthList[month+1])">
+                    <img src="../../static/images/caret-back.svg"
+                         class="calendar__button-next"/>
+                </div>
             </div>
-            <div class="calendar__header-text">
-                <SelectOption :options="monthList"
-                              :input-value="getMonthName"
-                              @changeValue="changeMonth"/>
-                <input v-model="year"
-                       class="faux-input"/>
-            </div>
-            <div v-on:click="changeMonth(monthList[month+1])">
-                <img src="../../static/images/caret-back.svg"
-                     class="calendar__button-next"/>
-            </div>
-        </div>
-        <div class="calendar__content">
-            <div v-for="day in weakDaysList"
-                 class="calendar__weak-day">
-                {{day}}
-            </div>
-            <div v-for="n in firstDayWeakInMonth"></div>
-            <div v-for="day in getListOfDays"
-                 v-on:click="setValue(day, month + 1)"
-                 v-bind:class="{calendar__selected: isSelectedDay(day)}"
-                 class="calendar__day">
-                {{day}}
+            <div class="calendar__content">
+                <div v-for="day in weakDaysList"
+                     class="calendar__weak-day">
+                    {{day}}
+                </div>
+                <div v-for="n in firstDayWeakInMonth"></div>
+                <div v-for="day in getListOfDays"
+                     v-on:click="setValue(day, month + 1)"
+                     v-bind:class="{calendar__selected: isSelectedDay(day)}"
+                     class="calendar__day">
+                    {{day}}
+                </div>
             </div>
         </div>
     </div>
@@ -35,7 +37,7 @@
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import SelectOption from '@/components/fields/SelectOption.vue';
-    import {DateTime} from 'luxon';
+    import {DateTime, Info} from 'luxon';
 
     @Component({
         components: {
@@ -51,30 +53,9 @@
 
         public month: number = this.getNewValues.month - 1;
         public year: number = this.getNewValues.year;
-        public weakDaysList = [
-            'SUN',
-            'MON',
-            'TUE',
-            'WED',
-            'THU',
-            'FRI',
-            'SAT'
-        ];
+        public weakDaysList = Info.weekdays('short');
 
-        private monthList = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-        ];
+        private monthList = Info.months('long');
 
         public changeMonth(monthName: string) {
             const month = this.monthList.indexOf(monthName);
@@ -156,20 +137,19 @@
 <style lang="scss">
     @import "../../static/scss/app";
 
+    .calendar__substrate {
+        position: fixed;
+        background-color: rgba($grey, 0.5);
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
     .calendar {
-
-        .substrate {
-            position: fixed;
-            background-color: rgba($grey, 0.5);
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            display: grid;
-            justify-content: center;
-            align-items: center;
-        }
 
         .placeholder {
             color: $grey;
@@ -181,7 +161,10 @@
 
         &__container {
             width: 450px;
-            padding-top: $gap;
+            background-color: white;
+            border: 1px solid $light-grey;
+            box-shadow: 0 2px 2px 0 $light-grey;
+            padding: 24px 16px;
         }
 
         &__header {
