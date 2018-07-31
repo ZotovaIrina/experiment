@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="input-error-container">
-            <masked-input v-model="inputValue"
+            <masked-input :value="getNewValues"
                           mask="11/11/1111"
                           class="faux-input"
                           placeholder="MM/DD/YYYY"/>
@@ -35,7 +35,6 @@
             }
         }) public inputDate!: string;
 
-        public inputValue: string | null = this.getNewValues;
         public showCalendar: boolean = false;
 
         public caretdd = require('../../static/images/caret-dd.svg');
@@ -45,7 +44,6 @@
         }
 
         public setValue(date: string | null) {
-            console.log('setValue inside');
             if (date === null) {
                 this.$emit('setNewDate', null);
             } else {
@@ -54,7 +52,6 @@
         }
 
         get getNewValues() {
-            console.log('getNewValues');
             if (DateTime.fromISO(this.inputDate).isValid) {
                 return DateTime.fromISO(this.inputDate).toFormat('MM/dd/yyyy');
             } else {
@@ -62,14 +59,10 @@
             }
         }
 
-        @Watch('inputDate') private onPropChange() {
-            this.inputValue = this.getNewValues;
-        }
-
         @Watch('inputValue')
         private onChangeInput() {
-            if (this.inputValue !== null && DateTime.fromFormat(this.inputValue, 'MM/dd/yyyy').isValid) {
-                this.setValue(DateTime.fromFormat(this.inputValue, 'MM/dd/yyyy').toISODate());
+            if (this.getNewValues !== null && DateTime.fromFormat(this.getNewValues, 'MM/dd/yyyy').isValid) {
+                this.setValue(DateTime.fromFormat(this.getNewValues, 'MM/dd/yyyy').toISODate());
             }
         }
 
