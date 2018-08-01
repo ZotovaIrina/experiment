@@ -8,6 +8,7 @@ interface SearchReportType {
     deedDocumentType: DeedDocumentEnum | null;
     states: string[];
     state: USState | null;
+    phone: string | null;
 }
 
 const searchReportState: SearchReportType = {
@@ -15,7 +16,8 @@ const searchReportState: SearchReportType = {
     deedDocumentTypes: Object.keys(DeedDocumentEnum).map((key) => DeedDocumentEnum[key as any]),
     deedDocumentType: null,
     states: Object.keys(USState),
-    state: null
+    state: null,
+    phone: '1111111'
 };
 
 const gettersSearchReport: GetterTree<SearchReportType, any> = {
@@ -23,7 +25,8 @@ const gettersSearchReport: GetterTree<SearchReportType, any> = {
     getDeedDocumentTypes: (state: SearchReportType) => state.deedDocumentTypes,
     getDeedDocumentType: (state: SearchReportType) => state.deedDocumentType,
     getStates: (state: SearchReportType) => state.states,
-    getState: (state: SearchReportType) => state.state
+    getState: (state: SearchReportType) => state.state,
+    getPhone: (state: SearchReportType) => state.phone
 };
 
 const mutationsSearchReport: MutationTree<any> = {
@@ -35,6 +38,9 @@ const mutationsSearchReport: MutationTree<any> = {
     },
     setCurrentDate: (state, payload: string | null) => {
         searchReportState.currentDate = payload;
+    },
+    setPhone: (state, payload: string | null) => {
+        searchReportState.phone = payload;
     }
 };
 
@@ -45,7 +51,7 @@ const actionsSearchReport: ActionTree<SearchReportType, any> = {
         }
         searchReportStore.commit('setNewDocumentType', payload);
     },
-    setNewState: (searchReportStore: ActionContext<SearchReportType, any>, payload: string) => {
+    setNewState: (searchReportStore: ActionContext<SearchReportType, any>, payload: string | null) => {
         let newState: USState | null;
         if (payload === null || searchReportStore.state.states.indexOf(payload) === -1) {
             newState = null;
@@ -54,8 +60,11 @@ const actionsSearchReport: ActionTree<SearchReportType, any> = {
         }
         searchReportStore.commit('setNewState', newState);
     },
-    setCurrentDate: (searchReportStore: ActionContext<SearchReportType, any>, payload: string) => {
+    setCurrentDate: (searchReportStore: ActionContext<SearchReportType, any>, payload: string | null) => {
         searchReportStore.commit('setCurrentDate', payload);
+    },
+    setPhone: (searchReportStore: ActionContext<SearchReportType, any>, payload: string | null) => {
+        searchReportStore.commit('setPhone', payload);
     }
 };
 

@@ -11,6 +11,8 @@
                       :empty-value="true"
                       :place-holder="'Select'"
                       @changeValue="setNewDeedDocumentType"/>
+        <PhoneInput :input-value="getPhone"
+                    @changePhoneValue="setPhone"/>
         <!--<SelectOption :options="getStates"-->
         <!--:input-value="getState.name"-->
         <!--:empty-value="false"-->
@@ -25,23 +27,27 @@
     import {Getter, Action} from 'vuex-class';
     import CalendarInput from '@/components/fields/CalendarInput.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
+    import PhoneInput from '@/components/fields/PhoneInput.vue';
     import {USState} from '../store/types/USState';
 
     @Component({
         components: {
             SelectOption,
-            CalendarInput
+            CalendarInput,
+            PhoneInput
         }
     })
     export default class Application extends Vue {
         @Getter public getCurrentDate: string | null;
         @Action public setCurrentDate: string | null;
         @Getter public getDeedDocumentTypes: string[];
-        @Getter public getDeedDocumentType: string;
+        @Getter public getDeedDocumentType: string | null;
+        @Getter public getPhone: string | null;
         @Action public setNewDocumentType: (newValue: string | null) => void;
         @Getter public getStates: string[];
         @Getter public getState: USState | null;
         @Action public setNewState: (newValue: string | null) => void;
+        @Action public setPhone: (newValue: string | null) => void;
 
         public options = {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'};
 

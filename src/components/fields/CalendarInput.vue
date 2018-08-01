@@ -33,7 +33,7 @@
             default() {
                 return null;
             }
-        }) public inputDate!: string;
+        }) public inputDate!: string | null;
 
         public showCalendar: boolean = false;
 
@@ -52,7 +52,7 @@
         }
 
         get getNewValues() {
-            if (DateTime.fromISO(this.inputDate).isValid) {
+            if (this.inputDate !== null && DateTime.fromISO(this.inputDate).isValid) {
                 return DateTime.fromISO(this.inputDate).toFormat('MM/dd/yyyy');
             } else {
                 return null;
@@ -61,6 +61,7 @@
 
         @Watch('inputValue')
         private onChangeInput() {
+            console.log('inputValue');
             if (this.getNewValues !== null && DateTime.fromFormat(this.getNewValues, 'MM/dd/yyyy').isValid) {
                 this.setValue(DateTime.fromFormat(this.getNewValues, 'MM/dd/yyyy').toISODate());
             }
