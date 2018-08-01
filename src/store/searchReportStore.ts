@@ -9,6 +9,7 @@ interface SearchReportType {
     states: string[];
     state: USState | null;
     phone: string | null;
+    currency: number | null;
 }
 
 const searchReportState: SearchReportType = {
@@ -17,7 +18,8 @@ const searchReportState: SearchReportType = {
     deedDocumentType: null,
     states: Object.keys(USState),
     state: null,
-    phone: null
+    phone: null,
+    currency: null
 };
 
 const gettersSearchReport: GetterTree<SearchReportType, any> = {
@@ -26,7 +28,8 @@ const gettersSearchReport: GetterTree<SearchReportType, any> = {
     getDeedDocumentType: (state: SearchReportType) => state.deedDocumentType,
     getStates: (state: SearchReportType) => state.states,
     getState: (state: SearchReportType) => state.state,
-    getPhone: (state: SearchReportType) => state.phone
+    getPhone: (state: SearchReportType) => state.phone,
+    getCurrency: (state: SearchReportType) => state.currency
 };
 
 const mutationsSearchReport: MutationTree<any> = {
@@ -41,6 +44,9 @@ const mutationsSearchReport: MutationTree<any> = {
     },
     setPhone: (state, payload: string | null) => {
         searchReportState.phone = payload;
+    },
+    setCurrency: (state, payload: number | null) => {
+        searchReportState.currency = payload;
     }
 };
 
@@ -65,6 +71,9 @@ const actionsSearchReport: ActionTree<SearchReportType, any> = {
     },
     setPhone: (searchReportStore: ActionContext<SearchReportType, any>, payload: string | null) => {
         searchReportStore.commit('setPhone', payload);
+    },
+    setCurrency: (searchReportStore: ActionContext<SearchReportType, any>, payload: number | null) => {
+        searchReportStore.commit('setCurrency', payload);
     }
 };
 

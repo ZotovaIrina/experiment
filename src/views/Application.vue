@@ -1,9 +1,5 @@
 <template>
     <div class="hello">
-        <h2>Date time: {{dateTime}}</h2>
-        <h2 v-if="!!getCurrentDate">
-            {{getCurrentDate.toLocaleString('en-En', options)}}
-        </h2>
         <CalendarInput @setNewDate="setCurrentDate"
                        :input-date="getCurrentDate"/>
         <SelectOption :options="getDeedDocumentTypes"
@@ -13,6 +9,9 @@
                       @changeValue="setNewDeedDocumentType"/>
         <PhoneInput :input-value="getPhone"
                     @changePhoneValue="setPhone"/>
+        <CurrencyInput :input-value="getCurrency"
+                       @changeCurrencyValue="setCurrency"/>
+
         <!--<SelectOption :options="getStates"-->
         <!--:input-value="getState.name"-->
         <!--:empty-value="false"-->
@@ -28,17 +27,21 @@
     import CalendarInput from '@/components/fields/CalendarInput.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
     import PhoneInput from '@/components/fields/PhoneInput.vue';
+    import CurrencyInput from '@/components/fields/CurrencyInput.vue';
     import {USState} from '../store/types/USState';
 
     @Component({
         components: {
             SelectOption,
             CalendarInput,
-            PhoneInput
+            PhoneInput,
+            CurrencyInput
         }
     })
     export default class Application extends Vue {
         @Getter public getCurrentDate: string | null;
+        @Getter public getCurrency: number | null;
+        @Action public setCurrency: number | null;
         @Action public setCurrentDate: string | null;
         @Getter public getDeedDocumentTypes: string[];
         @Getter public getDeedDocumentType: string | null;
@@ -48,10 +51,6 @@
         @Getter public getState: USState | null;
         @Action public setNewState: (newValue: string | null) => void;
         @Action public setPhone: (newValue: string | null) => void;
-
-        public options = {weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'};
-
-        public dateTime = 'date';
 
         public setNewDeedDocumentType(newValue: string | null) {
             this.setNewDocumentType(newValue);
