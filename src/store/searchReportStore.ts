@@ -17,7 +17,7 @@ const searchReportState: SearchReportType = {
     deedDocumentType: null,
     states: Object.keys(USState),
     state: null,
-    phone: '1111111'
+    phone: null
 };
 
 const gettersSearchReport: GetterTree<SearchReportType, any> = {

@@ -14,7 +14,6 @@
 
     @Component({
         components: {
-
             MaskedInput,
             Calendar
         }
@@ -29,12 +28,10 @@
         public value: string | null = this.inputValue;
 
         get phoneValue(): string | null {
-            console.log('get phoneValue');
             return this.value;
         }
 
         set phoneValue(newValue: string | null) {
-            console.log('setter', newValue);
             this.value = newValue;
             if (newValue !== null && !newValue.includes('_')) {
                 const valueWithoutMask = newValue.replace(/\D/g, '');
