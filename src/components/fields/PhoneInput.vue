@@ -13,7 +13,6 @@
     import MaskedInput from 'vue-masked-input';
 
     interface PhoneProps {
-        inputValue: string | null;
         isRequired: boolean;
     }
 
@@ -23,14 +22,10 @@
         }
     })
     export default class PhoneInput extends Vue {
-        @Prop({
-            default: {
-                inputValue: null,
-                isRequired: false
-            }
-        }) public params: PhoneProps;
+        @Prop({default: false}) public params: PhoneProps;
+        @Prop({default: null}) public inputValue: string | null;
 
-        public value: string | null = this.params.inputValue;
+        public value: string | null = this.inputValue;
         public errorMessage: string | null = 'error';
 
         get phoneValue(): string | null {
@@ -41,10 +36,10 @@
             this.value = newValue;
             if (newValue !== null && !newValue.includes('_')) {
                 const valueWithoutMask = newValue.replace(/\D/g, '');
-                if (valueWithoutMask !== this.params.inputValue) {
+                if (valueWithoutMask !== this.inputValue) {
                     this.$emit('onChange', valueWithoutMask);
                 }
-            } else if (newValue === null && newValue !== this.params.inputValue) {
+            } else if (newValue === null && newValue !== this.inputValue) {
                 this.$emit('onChange', null);
             }
         }

@@ -6,7 +6,7 @@
 
         <div class="input-error-container">
             <input :placeholder="params.placeHolder"
-                   :value="params.inputValue"
+                   :value="inputValue"
                    :required="params.isRequired"
                    v-on:click="optionsListTrigger"
                    class="faux-input"/>
@@ -34,7 +34,6 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
 
     interface SelectOptionProps {
-        inputValue: string | null;
         isRequired: boolean;
         options: string[];
         placeHolder: string;
@@ -52,6 +51,7 @@
                 emptyValue: true
             }
         }) public params: SelectOptionProps;
+        @Prop({default: null}) public inputValue: string | null;
 
         public hideOptionsList: boolean = true;
 

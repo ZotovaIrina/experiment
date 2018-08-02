@@ -3,6 +3,7 @@
         <span>{{labelText}}</span>
         <component v-bind:is="fieldComponent"
                    @onChange="setValue"
+                   :inputValue="inputValue"
                    :params="fieldParams"></component>
         <span>{{errorMessage}}</span>
     </div>
@@ -10,7 +11,6 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import MaskedInput from 'vue-masked-input';
     import PhoneInput from '@/components/fields/PhoneInput.vue';
     import CalendarInput from '@/components/fields/CalendarInput.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
@@ -20,11 +20,11 @@
         isRequired: boolean;
         label: string;
         type: string;
+        inputValue: any;
     }
 
     @Component({
         components: {
-            MaskedInput,
             CalendarInput,
             SelectOption,
             CurrencyInput
@@ -32,6 +32,7 @@
     })
     export default class InputField extends Vue {
         @Prop() public params: InputParams;
+        @Prop() public inputValue: any;
 
         public errorMessage: string | null = '';
 

@@ -23,7 +23,7 @@
                                         options: monthList,
                                         emptyValue: false}"
                                       @onChange="changeMonth"/>
-                        <input v-model="year"
+                        <input v-model="yearValue"
                                class="faux-input"/>
                     </div>
                     <div v-on:click="switchMonth(month+1)">
@@ -56,7 +56,6 @@
     import SelectOption from '@/components/fields/SelectOption.vue';
 
     interface CalendarProps {
-        inputValue: string | null;
         isRequired: boolean;
     }
 
@@ -75,6 +74,7 @@
                 };
             }
         }) public params: CalendarProps;
+        @Prop({default: null}) public inputValue: string | null;
 
         public showCalendar: boolean = false;
         public value: string | null = null;
@@ -109,13 +109,12 @@
         }
 
         public changeMonth(monthName: string) {
-            console.log('changeMonth');
-            this.switchMonth(this.monthList.indexOf(monthName))
+            this.switchMonth(this.monthList.indexOf(monthName));
         }
 
         get getNewValues() {
-            if (this.params.inputValue !== null && DateTime.fromISO(this.params.inputValue).isValid) {
-                return DateTime.fromISO(this.params.inputValue);
+            if (this.inputValue !== null && DateTime.fromISO(this.inputValue).isValid) {
+                return DateTime.fromISO(this.inputValue);
             } else {
                 return DateTime.local();
             }
@@ -137,7 +136,7 @@
                 days.push(i);
             }
             for (let i = 29; i <= 31; i++) {
-                day = DateTime.local(this.year, this.month + 1, (i));
+                day = DateTime.local(this.yearValue, this.month + 1, (i));
                 if (day.month - 1 === this.month) {
                     days.push(day.day);
                 }
@@ -145,15 +144,27 @@
             return days;
         }
 
+        get yearValue() {
+            console.log('get yearValue', this.year);
+            return this.year;
+        }
+
+        set yearValue(newYear: number) {
+            console.log('set yearValue', newYear);
+            if (newYear > 1500) {
+                this.year = newYear;
+            }
+        }
+
         public isSelectedDay(day: number) {
-            if (this.params.inputValue === null) {
+            if (this.inputValue === null) {
                 return this.year === DateTime.local().year &&
                     this.month === DateTime.local().month - 1 &&
                     day === DateTime.local().day;
             } else {
-                return this.year === DateTime.fromISO(this.params.inputValue).year &&
-                    this.month === DateTime.fromISO(this.params.inputValue).month - 1 &&
-                    day === DateTime.fromISO(this.params.inputValue).day;
+                return this.year === DateTime.fromISO(this.inputValue).year &&
+                    this.month === DateTime.fromISO(this.inputValue).month - 1 &&
+                    day === DateTime.fromISO(this.inputValue).day;
             }
         }
 
@@ -164,8 +175,8 @@
 
         get getValue() {
             console.log('getValue');
-            if (this.params.inputValue !== null && DateTime.fromISO(this.params.inputValue).isValid) {
-                return DateTime.fromISO(this.params.inputValue).toFormat('MM/dd/yyyy');
+            if (this.inputValue !== null && DateTime.fromISO(this.inputValue).isValid) {
+                return DateTime.fromISO(this.inputValue).toFormat('MM/dd/yyyy');
             } else {
                 return null;
             }

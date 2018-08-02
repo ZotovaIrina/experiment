@@ -1,22 +1,15 @@
 <template>
     <div class="hello">
         <form name="applicationForm">
-            <InputField :params="{
-                        type: 'calendar',
-                        label: 'Current date',
-                        inputValue: getCurrentDate,
-                        isRequired: true}"
+            <InputField :params="formConfig.currentDay"
+                        :inputValue="getParams('currentDay')"
                         @onChange="setCurrentDate" />
-            <InputField :params="{
-                        type: 'phone',
-                        label: 'Phone',
-                        inputValue: getPhone,
-                        isRequired: false}"
+            <InputField :params="formConfig.phone"
+                        :inputValue="getParams('phone')"
                         @onChange="setPhone" />
             <InputField :params="{
                         type: 'selectOption',
                         label: 'Document type',
-                        inputValue: getDeedDocumentType,
                         options: getDeedDocumentTypes,
                         emptyValue: true,
                         placeHolder: 'Select',
@@ -35,7 +28,7 @@
 
 <script lang="ts">
 
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
     import {Getter, Action} from 'vuex-class';
     import InputField from '@/components/fields/InputField.vue';
     import {USState} from '../store/types/USState';
@@ -58,6 +51,34 @@
         @Getter public getState: USState | null;
         @Action public setNewState: (newValue: string | null) => void;
         @Action public setPhone: (newValue: string | null) => void;
+
+        get getData() {
+            return {
+                currentDay: this.getCurrentDate,
+                phone: this.getPhone
+            };
+        }
+
+        get formConfig() {
+            return {
+                currentDay: {
+                    type: 'calendar',
+                        label: 'Current date',
+                        dataPath: 'currentDay',
+                        isRequired: true
+                },
+                phone: {
+                    type: 'phone',
+                        label: 'Phone',
+                        dataPath: 'phone',
+                        isRequired: false
+                }
+            };
+        }
+
+        public getParams(fieldID: string) {
+            return this.getData[this.formConfig[fieldID].dataPath];
+        }
 
         public setNewDeedDocumentType(newValue: string | null) {
             this.setNewDocumentType(newValue);

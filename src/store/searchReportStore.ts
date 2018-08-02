@@ -18,7 +18,7 @@ const searchReportState: SearchReportType = {
     deedDocumentType: null,
     states: Object.keys(USState),
     state: null,
-    phone: null,
+    phone: '11111111',
     currency: null
 };
 

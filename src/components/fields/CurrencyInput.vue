@@ -11,7 +11,6 @@
     import { VMoney, Money } from 'v-money';
 
     interface CurrencyProps {
-        inputValue: string | null;
         isRequired: boolean;
     }
     @Component({
@@ -20,11 +19,8 @@
         }
     })
     export default class CurrencyInput extends Vue {
-        @Prop({
-            default() {
-                return null;
-            }
-        }) public params: CurrencyProps;
+        @Prop({default: null}) public params: CurrencyProps;
+        @Prop({default: null}) public inputValue: string | null;
 
         public value: string = '';
         public moneyConfig = {
@@ -49,10 +45,10 @@
             if (newValue !== null) {
                 // const valueWithoutMask = newValue.replace(/\D/g, '');
                 // console.log('emit', valueWithoutMask);
-                if (newValue !== this.params.inputValue) {
+                if (newValue !== this.inputValue) {
                     this.$emit('onChange', newValue);
                 }
-            } else if (newValue === null && newValue !== this.params.inputValue) {
+            } else if (newValue === null && newValue !== this.inputValue) {
                 this.$emit('onChange', null);
             }
         }
