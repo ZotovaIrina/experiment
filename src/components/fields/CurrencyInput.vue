@@ -9,7 +9,6 @@
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import { VMoney, Money } from 'v-money';
-    import Calendar from '@/components/fields/Calendar.vue';
 
     interface CurrencyProps {
         inputValue: string | null;
@@ -17,8 +16,7 @@
     }
     @Component({
         components: {
-            Money,
-            Calendar
+            Money
         }
     })
     export default class CurrencyInput extends Vue {

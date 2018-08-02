@@ -11,26 +11,59 @@
                  :class="{'calendar-input__open': !showCalendar}"
                  @click="calendarShowTrigger"/>
         </div>
-        <Calendar v-if="showCalendar"
-                  :input-date="value"
-                  @onChange="setValue"/>
+        <div v-if="showCalendar" class="calendar__substrate">
+            <div class="calendar__container">
+                <div class="calendar__header">
+                    <div v-on:click="switchMonth(month-1)">
+                        <img src="../../static/images/caret-back.svg"/>
+                    </div>
+                    <div class="calendar__header-text">
+                        <SelectOption :params="{
+                                        inputValue:getMonthName,
+                                        options: monthList,
+                                        emptyValue: false}"
+                                      @changeValue="changeMonth"/>
+                        <input v-model="year"
+                               class="faux-input"/>
+                    </div>
+                    <div v-on:click="switchMonth(month+1)">
+                        <img src="../../static/images/caret-back.svg"
+                             class="calendar__button-next"/>
+                    </div>
+                </div>
+                <div class="calendar__content">
+                    <div v-for="day in weakDaysList"
+                         class="calendar__weak-day">
+                        {{day}}
+                    </div>
+                    <div v-for="n in firstDayWeakInMonth"></div>
+                    <div v-for="day in getListOfDays"
+                         v-on:click="setCalendarValue(day, month + 1)"
+                         v-bind:class="{calendar__selected: isSelectedDay(day)}"
+                         class="calendar__day">
+                        {{day}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-    import {DateTime} from 'luxon';
+    import {DateTime, Info} from 'luxon';
     import MaskedInput from 'vue-masked-input';
-    import Calendar from '@/components/fields/Calendar.vue';
+    import SelectOption from '@/components/fields/SelectOption.vue';
 
     interface CalendarProps {
         inputValue: string | null;
         isRequired: boolean;
     }
+
     @Component({
         components: {
             MaskedInput,
-            Calendar
+            SelectOption
         }
     })
     export default class CalendarInput extends Vue {
@@ -45,6 +78,10 @@
 
         public showCalendar: boolean = false;
         public value: string | null = null;
+        public monthList = Info.months('long');
+        public weakDaysList = Info.weekdays('short');
+        public month: number = this.getNewValues.month - 1;
+        public year: number = this.getNewValues.year;
 
         public caretdd = require('../../static/images/caret-dd.svg');
 
@@ -56,6 +93,74 @@
             this.$emit('onChange', date);
         }
 
+        public switchMonth(month: number) {
+            switch (month) {
+                case 12:
+                    this.month = 0;
+                    this.year = this.year + 1;
+                    break;
+                case -1:
+                    this.month = 11;
+                    this.year = this.year - 1;
+                    break;
+                default:
+                    this.month = month;
+            }
+        }
+
+        public changeMonth(monthName: string) {
+            this.switchMonth(this.monthList.indexOf(monthName))
+        }
+
+        get getNewValues() {
+            if (this.params.inputValue !== null && DateTime.fromISO(this.params.inputValue).isValid) {
+                return DateTime.fromISO(this.params.inputValue);
+            } else {
+                return DateTime.local();
+            }
+        }
+
+        get getMonthName() {
+            return this.monthList[this.month];
+        }
+
+        get firstDayWeakInMonth(): number {
+            return DateTime.local(this.year, this.month + 1, 1).weekday;
+        }
+
+        get getListOfDays() {
+            console.log('this.month', this.month);
+            let day: DateTime;
+            const days: number[] = [];
+            for (let i = 1; i <= 28; i++) {
+                days.push(i);
+            }
+            for (let i = 29; i <= 31; i++) {
+                day = DateTime.local(this.year, this.month + 1, (i));
+                if (day.month - 1 === this.month) {
+                    days.push(day.day);
+                }
+            }
+            return days;
+        }
+
+        public isSelectedDay(day: number) {
+            if (this.params.inputValue === null) {
+                return this.year === DateTime.local().year &&
+                    this.month === DateTime.local().month - 1 &&
+                    day === DateTime.local().day;
+            } else {
+                return this.year === DateTime.fromISO(this.params.inputValue).year &&
+                    this.month === DateTime.fromISO(this.params.inputValue).month - 1 &&
+                    day === DateTime.fromISO(this.params.inputValue).day;
+            }
+        }
+
+        public setCalendarValue(day: number, month: number) {
+            this.calendarShowTrigger();
+            this.$emit('onChange', DateTime.local(this.year, month, day).toISODate());
+        }
+
         get getValue() {
             console.log('getValue');
             if (this.params.inputValue !== null && DateTime.fromISO(this.params.inputValue).isValid) {
@@ -65,13 +170,8 @@
             }
         }
 
-        // set getValue(new) {
-        //     console.log(' set getValue');
-        // };
-
         @Watch('getValue')
         private onChangeInput() {
-            console.log('onChange inputValue');
             if (this.value !== null && DateTime.fromFormat(this.value, 'MM/dd/yyyy').isValid) {
                 this.setValue(DateTime.fromFormat(this.value, 'MM/dd/yyyy').toISODate());
             }
@@ -84,32 +184,27 @@
 <style lang="scss">
     @import "../../static/scss/app";
 
-    .calendar-input {
+    .calendar__substrate {
+        position: fixed;
+        background-color: rgba($grey, 0.5);
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .substrate {
-            position: fixed;
-            background-color: rgba($grey, 0.5);
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            display: grid;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .placeholder {
-            color: $grey;
-        }
-
-        &__hide {
-            display: none !important;
-        }
+    .calendar {
 
         &__container {
             width: 450px;
-            padding-top: $gap;
+            background-color: white;
+            border: 1px solid $light-grey;
+            box-shadow: 0 2px 2px 0 $light-grey;
+            padding: 24px 16px;
         }
 
         &__header {
@@ -158,6 +253,18 @@
         .space-between {
             display: flex;
             justify-content: space-between;
+        }
+
+    }
+
+    .calendar-input {
+
+        .placeholder {
+            color: $grey;
+        }
+
+        &__hide {
+            display: none !important;
         }
 
         &__close {

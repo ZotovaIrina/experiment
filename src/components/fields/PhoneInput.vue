@@ -11,7 +11,6 @@
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import MaskedInput from 'vue-masked-input';
-    import Calendar from '@/components/fields/Calendar.vue';
 
     interface PhoneProps {
         inputValue: string | null;
@@ -20,8 +19,7 @@
 
     @Component({
         components: {
-            MaskedInput,
-            Calendar
+            MaskedInput
         }
     })
     export default class PhoneInput extends Vue {
