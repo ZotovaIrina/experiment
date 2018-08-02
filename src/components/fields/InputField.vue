@@ -15,6 +15,7 @@
     import CalendarInput from '@/components/fields/CalendarInput.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
     import CurrencyInput from '@/components/fields/CurrencyInput.vue';
+    import {FormPayload} from '../../store/searchReportStore';
 
     interface InputParams {
         isRequired: boolean;
@@ -33,6 +34,7 @@
     export default class InputField extends Vue {
         @Prop() public params: InputParams;
         @Prop() public inputValue: any;
+        @Prop() public dataPath: string;
 
         public errorMessage: string | null = '';
 
@@ -54,9 +56,12 @@
             return this.params;
         }
 
-        public setValue(value: any) {
-            console.log('InputField', value);
-            this.$emit('onChange', value);
+        public setValue(newValue: any) {
+            const payload: FormPayload = {
+                field: this.dataPath,
+                data: newValue
+            };
+            this.$emit('onChange', payload);
         }
     }
 
