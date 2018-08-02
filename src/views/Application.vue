@@ -1,31 +1,30 @@
 <template>
     <div class="hello">
         <form name="applicationForm">
-            <InputField type="calendar"
-                        :isRequired="true"
-                        :label="'Current date'"
-                        :params="{
+            <InputField :params="{
+                        type: 'calendar',
+                        label: 'Current date',
                         inputValue: getCurrentDate,
                         isRequired: true}"
                         @onChange="setCurrentDate" />
-            <InputField type="phone"
-                        :label="'Phone'"
-                        :params="{
+            <InputField :params="{
+                        type: 'phone',
+                        label: 'Phone',
                         inputValue: getPhone,
                         isRequired: false}"
                         @onChange="setPhone" />
-            <InputField type="selectOption"
-                        :label="'Document type'"
-                        :params="{
+            <InputField :params="{
+                        type: 'selectOption',
+                        label: 'Document type',
                         inputValue: getDeedDocumentType,
                         options: getDeedDocumentTypes,
                         emptyValue: true,
                         placeHolder: 'Select',
                         isRequired: false}"
                         @onChange="setNewDeedDocumentType" />
-            <InputField type="currency"
-                        :label="'Price'"
-                        :params="{
+            <InputField :params="{
+                        type: 'currency',
+                        label: 'Price',
                         inputValue: getCurrency,
                         isRequired: false}"
                         @onChange="setCurrency" />

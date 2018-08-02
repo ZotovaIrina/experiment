@@ -18,6 +18,8 @@
 
     interface InputParams {
         isRequired: boolean;
+        label: string;
+        type: string;
     }
 
     @Component({
@@ -30,13 +32,11 @@
     })
     export default class InputField extends Vue {
         @Prop() public params: InputParams;
-        @Prop({default: ''}) public label: string;
-        @Prop({default: ''}) public type: string;
 
         public errorMessage: string | null = '';
 
         get labelText() {
-            return this.params.isRequired ? this.label + ' *' : this.label;
+            return this.params.isRequired ? this.params.label + ' *' : this.params.label;
         }
 
         get fieldComponent() {
@@ -46,11 +46,10 @@
                 selectOption: SelectOption,
                 currency: CurrencyInput
             };
-            return componentMap[this.type];
+            return componentMap[this.params.type];
         }
 
         get fieldParams() {
-            console.log('this.params', this.params);
             return this.params;
         }
 
