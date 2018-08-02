@@ -61,7 +61,7 @@
             this.hideOptionsList = !this.hideOptionsList;
         }
 
-        public optionClick(newValue: string) {
+        public optionClick(newValue: string | null) {
             this.optionsListTrigger();
             this.$emit('onChange', newValue);
         }

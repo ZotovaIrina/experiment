@@ -22,7 +22,7 @@
                                         inputValue:getMonthName,
                                         options: monthList,
                                         emptyValue: false}"
-                                      @changeValue="changeMonth"/>
+                                      @onChange="changeMonth"/>
                         <input v-model="year"
                                class="faux-input"/>
                     </div>
@@ -109,6 +109,7 @@
         }
 
         public changeMonth(monthName: string) {
+            console.log('changeMonth');
             this.switchMonth(this.monthList.indexOf(monthName))
         }
 
