@@ -3,6 +3,7 @@
         <masked-input v-model="phoneValue"
                       mask="(111) 111-1111"
                       class="faux-input"
+                      :required="params.isRequired"
                       placeholder="(XXX) XXX-XXXX"/>
     </div>
 </template>
@@ -12,6 +13,11 @@
     import MaskedInput from 'vue-masked-input';
     import Calendar from '@/components/fields/Calendar.vue';
 
+    interface PhoneProps {
+        inputValue: string | null;
+        isRequired: boolean;
+    }
+
     @Component({
         components: {
             MaskedInput,
@@ -20,12 +26,14 @@
     })
     export default class PhoneInput extends Vue {
         @Prop({
-            default() {
-                return null;
+            default: {
+                inputValue: null,
+                isRequired: false
             }
-        }) public inputValue: string | null;
+        }) public params: PhoneProps;
 
-        public value: string | null = this.inputValue;
+        public value: string | null = this.params.inputValue;
+        public errorMessage: string | null = 'error';
 
         get phoneValue(): string | null {
             return this.value;
@@ -35,12 +43,11 @@
             this.value = newValue;
             if (newValue !== null && !newValue.includes('_')) {
                 const valueWithoutMask = newValue.replace(/\D/g, '');
-                console.log('emit', valueWithoutMask);
-                if (valueWithoutMask !== this.inputValue) {
-                    this.$emit('changePhoneValue', valueWithoutMask);
+                if (valueWithoutMask !== this.params.inputValue) {
+                    this.$emit('onChange', valueWithoutMask);
                 }
-            } else if (newValue === null && newValue !== this.inputValue) {
-                this.$emit('changePhoneValue', null);
+            } else if (newValue === null && newValue !== this.params.inputValue) {
+                this.$emit('onChange', null);
             }
         }
 

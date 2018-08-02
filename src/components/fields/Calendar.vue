@@ -87,7 +87,7 @@
 
         public setValue(day: number, month: number) {
             console.log('setValue', DateTime.local(this.year, month, day).toISODate());
-            this.$emit('setNewDate', DateTime.local(this.year, month, day).toISODate());
+            this.$emit('onChange', DateTime.local(this.year, month, day).toISODate());
         }
 
         get getNewValues() {

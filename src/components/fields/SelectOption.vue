@@ -5,8 +5,9 @@
              v-on:click="optionsListTrigger"></div>
 
         <div class="input-error-container">
-            <input :placeholder="placeHolder"
-                   :value="inputValue"
+            <input :placeholder="params.placeHolder"
+                   :value="params.inputValue"
+                   :required="params.isRequired"
                    v-on:click="optionsListTrigger"
                    class="faux-input"/>
             <img :src="caretdd"
@@ -15,11 +16,11 @@
         </div>
         <div class="select-input__list-container"
              :class="{'select-input__hide': hideOptionsList}">
-            <div v-show="emptyValue"
+            <div v-show="params.emptyValue"
                  class="select-input__placeholder"
-                 v-on:click="optionClick(null)">{{placeHolder}}
+                 v-on:click="optionClick(null)">{{params.placeHolder}}
             </div>
-            <div v-for="option in options"
+            <div v-for="option in params.options"
                  v-on:click="optionClick(option)"
                  class="select-input__item">{{option}}
             </div>
@@ -30,17 +31,27 @@
 
 <script lang="ts">
 
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue} from 'vue-property-decorator';
 
-    @Component({
-        props: {
-            inputValue: String,
-            options: Array,
-            placeHolder: String,
-            emptyValue: Boolean
-        }
-    })
+    interface SelectOptionProps {
+        inputValue: string | null;
+        isRequired: boolean;
+        options: string[];
+        placeHolder: string;
+        emptyValue: boolean;
+    }
+
+    @Component({})
     export default class SelectOption extends Vue {
+        @Prop({
+            default: {
+                inputValue: null,
+                isRequired: false,
+                options: [],
+                placeHolder: 'Select',
+                emptyValue: true
+            }
+        }) public params: SelectOptionProps;
 
         public hideOptionsList: boolean = true;
 
@@ -52,7 +63,7 @@
 
         public optionClick(newValue: string) {
             this.optionsListTrigger();
-            this.$emit('changeValue', newValue);
+            this.$emit('onChange', newValue);
         }
     }
 

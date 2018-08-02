@@ -1,6 +1,8 @@
 <template>
     <div class="input-error-container">
-        <money v-model="currencyValue" v-bind="moneyConfig"></money> {{currencyValue}}
+        <money v-model="currencyValue"
+               :required="params.isRequired"
+               v-bind="moneyConfig"></money> {{currencyValue}}
     </div>
 </template>
 
@@ -9,13 +11,14 @@
     import { VMoney, Money } from 'v-money';
     import Calendar from '@/components/fields/Calendar.vue';
 
+    interface CurrencyProps {
+        inputValue: string | null;
+        isRequired: boolean;
+    }
     @Component({
         components: {
             Money,
             Calendar
-        },
-        directives: {
-            VMoney
         }
     })
     export default class CurrencyInput extends Vue {
@@ -23,7 +26,7 @@
             default() {
                 return null;
             }
-        }) public inputValue: string | null;
+        }) public params: CurrencyProps;
 
         public value: string = '';
         public moneyConfig = {
@@ -48,11 +51,11 @@
             if (newValue !== null) {
                 // const valueWithoutMask = newValue.replace(/\D/g, '');
                 // console.log('emit', valueWithoutMask);
-                if (newValue !== this.inputValue) {
-                    this.$emit('changePhoneValue', newValue);
+                if (newValue !== this.params.inputValue) {
+                    this.$emit('onChange', newValue);
                 }
-            } else if (newValue === null && newValue !== this.inputValue) {
-                this.$emit('changePhoneValue', null);
+            } else if (newValue === null && newValue !== this.params.inputValue) {
+                this.$emit('onChange', null);
             }
         }
 

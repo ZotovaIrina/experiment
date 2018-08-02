@@ -1,9 +1,10 @@
 <template>
     <div>
         <div class="input-error-container">
-            <masked-input :value="getNewValues"
+            <masked-input :value="getValue"
                           mask="11/11/1111"
                           class="faux-input"
+                          :required="params.isRequired"
                           placeholder="MM/DD/YYYY"/>
             <img :src="caretdd"
                  class="calendar-input__close"
@@ -11,8 +12,8 @@
                  @click="calendarShowTrigger"/>
         </div>
         <Calendar v-if="showCalendar"
-                  :input-date="inputDate"
-                  @setNewDate="setValue"/>
+                  :input-date="value"
+                  @onChange="setValue"/>
     </div>
 </template>
 
@@ -22,6 +23,10 @@
     import MaskedInput from 'vue-masked-input';
     import Calendar from '@/components/fields/Calendar.vue';
 
+    interface CalendarProps {
+        inputValue: string | null;
+        isRequired: boolean;
+    }
     @Component({
         components: {
             MaskedInput,
@@ -31,11 +36,15 @@
     export default class CalendarInput extends Vue {
         @Prop({
             default() {
-                return null;
+                return {
+                    inputValue: null,
+                    isRequired: false
+                };
             }
-        }) public inputDate!: string | null;
+        }) public params: CalendarProps;
 
         public showCalendar: boolean = false;
+        public value: string | null = null;
 
         public caretdd = require('../../static/images/caret-dd.svg');
 
@@ -44,26 +53,27 @@
         }
 
         public setValue(date: string | null) {
-            if (date === null) {
-                this.$emit('setNewDate', null);
-            } else {
-                this.$emit('setNewDate', date);
-            }
+            this.$emit('onChange', date);
         }
 
-        get getNewValues() {
-            if (this.inputDate !== null && DateTime.fromISO(this.inputDate).isValid) {
-                return DateTime.fromISO(this.inputDate).toFormat('MM/dd/yyyy');
+        get getValue() {
+            console.log('getValue');
+            if (this.params.inputValue !== null && DateTime.fromISO(this.params.inputValue).isValid) {
+                return DateTime.fromISO(this.params.inputValue).toFormat('MM/dd/yyyy');
             } else {
                 return null;
             }
         }
 
-        @Watch('inputValue')
+        // set getValue(new) {
+        //     console.log(' set getValue');
+        // };
+
+        @Watch('getValue')
         private onChangeInput() {
-            console.log('inputValue');
-            if (this.getNewValues !== null && DateTime.fromFormat(this.getNewValues, 'MM/dd/yyyy').isValid) {
-                this.setValue(DateTime.fromFormat(this.getNewValues, 'MM/dd/yyyy').toISODate());
+            console.log('onChange inputValue');
+            if (this.value !== null && DateTime.fromFormat(this.value, 'MM/dd/yyyy').isValid) {
+                this.setValue(DateTime.fromFormat(this.value, 'MM/dd/yyyy').toISODate());
             }
         }
 

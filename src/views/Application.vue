@@ -1,22 +1,36 @@
 <template>
     <div class="hello">
-        <CalendarInput @setNewDate="setCurrentDate"
-                       :input-date="getCurrentDate"/>
-        <SelectOption :options="getDeedDocumentTypes"
-                      :input-value="getDeedDocumentType"
-                      :empty-value="true"
-                      :place-holder="'Select'"
-                      @changeValue="setNewDeedDocumentType"/>
-        <PhoneInput :input-value="getPhone"
-                    @changePhoneValue="setPhone"/>
-        <CurrencyInput :input-value="getCurrency"
-                       @changeCurrencyValue="setCurrency"/>
-
-        <!--<SelectOption :options="getStates"-->
-        <!--:input-value="getState.name"-->
-        <!--:empty-value="false"-->
-        <!--:place-holder="'Select'"-->
-        <!--@changeValue="setState"/>-->
+        <form name="applicationForm">
+            <InputField type="calendar"
+                        :isRequired="true"
+                        :label="'Current date'"
+                        :params="{
+                        inputValue: getCurrentDate,
+                        isRequired: true}"
+                        @onChange="setCurrentDate" />
+            <InputField type="phone"
+                        :label="'Phone'"
+                        :params="{
+                        inputValue: getPhone,
+                        isRequired: false}"
+                        @onChange="setPhone" />
+            <InputField type="selectOption"
+                        :label="'Document type'"
+                        :params="{
+                        inputValue: getDeedDocumentType,
+                        options: getDeedDocumentTypes,
+                        emptyValue: true,
+                        placeHolder: 'Select',
+                        isRequired: false}"
+                        @onChange="setNewDeedDocumentType" />
+            <InputField type="currency"
+                        :label="'Price'"
+                        :params="{
+                        inputValue: getCurrency,
+                        isRequired: false}"
+                        @onChange="setCurrency" />
+            <button type="submit">Submit</button>
+        </form>
     </div>
 </template>
 
@@ -24,18 +38,12 @@
 
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {Getter, Action} from 'vuex-class';
-    import CalendarInput from '@/components/fields/CalendarInput.vue';
-    import SelectOption from '@/components/fields/SelectOption.vue';
-    import PhoneInput from '@/components/fields/PhoneInput.vue';
-    import CurrencyInput from '@/components/fields/CurrencyInput.vue';
+    import InputField from '@/components/fields/InputField.vue';
     import {USState} from '../store/types/USState';
 
     @Component({
         components: {
-            SelectOption,
-            CalendarInput,
-            PhoneInput,
-            CurrencyInput
+            InputField
         }
     })
     export default class Application extends Vue {
@@ -59,6 +67,5 @@
         public setState(newValue: string | null) {
             this.setNewState(newValue);
         }
-
     }
 </script>
