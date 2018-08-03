@@ -22,6 +22,7 @@
         label: string;
         type: string;
         inputValue: any;
+        dataPath: string;
     }
 
     @Component({
@@ -34,7 +35,6 @@
     export default class InputField extends Vue {
         @Prop() public params: InputParams;
         @Prop() public inputValue: any;
-        @Prop() public dataPath: string;
 
         public errorMessage: string | null = '';
 
@@ -58,7 +58,7 @@
 
         public setValue(newValue: any) {
             const payload: FormPayload = {
-                field: this.dataPath,
+                field: this.params.dataPath,
                 data: newValue
             };
             this.$emit('onChange', payload);

@@ -1,10 +1,9 @@
 <template>
     <div class="hello">
         <form name="applicationForm">
-            <InputField v-for="field in Object.keys(formConfig)"
-                        :params="formConfig[field]"
-                        :dataPath="field"
-                        :inputValue="getParams(field)"
+            <InputField v-for="field in fieldArray"
+                        :params="field"
+                        :inputValue="getParams(field.dataPath)"
                         @onChange="setValue"/>
             <button type="submit">Submit</button>
         </form>
@@ -28,7 +27,19 @@
         @Getter public getSearchReportData: SearchReportType;
         @Action public setSearchReportValue: (payload: FormPayload) => void;
 
-        get formConfig() {
+        get fieldArray() {
+            return Object.keys(this.formConfig()).map((key) => this.formConfig()[key as any]);
+        }
+
+        public getParams(fieldID: string) {
+            return this.getData()[this.formConfig()[fieldID].dataPath];
+        }
+
+        public setValue(payload: FormPayload) {
+            return this.setSearchReportValue(payload);
+        }
+
+        private formConfig() {
             return {
                 currentDay: {
                     type: 'calendar',
@@ -61,16 +72,8 @@
             };
         }
 
-        get getData() {
+        private getData() {
             return this.getSearchReportData;
-        }
-
-        public getParams(fieldID: string) {
-            return this.getData[this.formConfig[fieldID].dataPath];
-        }
-
-        public setValue(payload: FormPayload) {
-            return this.setSearchReportValue(payload);
         }
     }
 </script>
