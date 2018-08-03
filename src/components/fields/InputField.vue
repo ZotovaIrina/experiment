@@ -56,7 +56,8 @@
             return this.params;
         }
 
-        public setValue(newValue: any) {
+        public setValue(newValue: any, errorMessage: string | null) {
+            this.errorMessage = errorMessage;
             const payload: FormPayload = {
                 field: this.params.dataPath,
                 data: newValue

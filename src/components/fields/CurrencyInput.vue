@@ -2,7 +2,7 @@
     <div class="input-error-container">
         <money v-model="currencyValue"
                :required="params.isRequired"
-               v-bind="moneyConfig"></money> {{currencyValue}}
+               v-bind="moneyConfig"></money>
     </div>
 </template>
 
@@ -12,6 +12,7 @@
 
     interface CurrencyProps {
         isRequired: boolean;
+        label: string;
     }
     @Component({
         components: {
@@ -43,13 +44,12 @@
                 this.value = newValue;
             }
             if (newValue !== null) {
-                // const valueWithoutMask = newValue.replace(/\D/g, '');
-                // console.log('emit', valueWithoutMask);
                 if (newValue !== this.inputValue) {
-                    this.$emit('onChange', newValue);
+                    this.$emit('onChange', newValue, null);
                 }
-            } else if (newValue === null && newValue !== this.inputValue) {
-                this.$emit('onChange', null);
+            } else {
+                const errorMessage = this.params.isRequired ? this.params.label + ' cannot be blank' : null;
+                this.$emit('onChange', null, errorMessage);
             }
         }
 

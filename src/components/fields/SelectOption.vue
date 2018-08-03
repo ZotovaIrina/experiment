@@ -38,6 +38,7 @@
         options: string[];
         placeHolder: string;
         emptyValue: boolean;
+        label: string;
     }
 
     @Component({})
@@ -63,7 +64,14 @@
 
         public optionClick(newValue: string | null) {
             this.optionsListTrigger();
-            this.$emit('onChange', newValue);
+
+            if (newValue === null && this.params.isRequired) {
+                this.$emit('onChange', null, this.params.label + ' cannot be blank');
+            } else if (newValue !== null && this.params.options.indexOf(newValue) === -1) {
+                this.$emit('onChange', null, 'Invalid ' + this.params.label.toLowerCase());
+            } else {
+                this.$emit('onChange', newValue, null);
+            }
         }
     }
 

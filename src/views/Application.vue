@@ -59,7 +59,7 @@
                     options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
                     emptyValue: true,
                     placeHolder: 'Select',
-                    isRequired: false,
+                    isRequired: true,
                     dataPath: 'deedDocumentType'
                 },
                 currency: {

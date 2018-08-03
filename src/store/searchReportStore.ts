@@ -18,7 +18,7 @@ const searchReportState: SearchReportType = {
     currentDate: null,
     deedDocumentType: null,
     state: null,
-    phone: '11111111',
+    phone: '1111111111',
     currency: null
 };
 

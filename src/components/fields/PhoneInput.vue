@@ -4,6 +4,7 @@
                       mask="(111) 111-1111"
                       class="faux-input"
                       :required="params.isRequired"
+                      @blur.native="onBlurFunction"
                       placeholder="(XXX) XXX-XXXX"/>
     </div>
 </template>
@@ -14,6 +15,7 @@
 
     interface PhoneProps {
         isRequired: boolean;
+        label: string;
     }
 
     @Component({
@@ -39,8 +41,15 @@
                 if (valueWithoutMask !== this.inputValue) {
                     this.$emit('onChange', valueWithoutMask);
                 }
-            } else if (newValue === null && newValue !== this.inputValue) {
-                this.$emit('onChange', null);
+            } else if (newValue === null) {
+                const errorMessage = this.params.isRequired ? this.params.label + ' cannot be blank' : null;
+                this.$emit('onChange', null, errorMessage);
+            }
+        }
+
+        public onBlurFunction() {
+            if (this.value !== null && this.value.indexOf('_') !== -1) {
+                this.$emit('onChange', null, 'Invalid ' + this.params.label.toLowerCase());
             }
         }
 
