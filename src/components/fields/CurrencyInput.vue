@@ -12,7 +12,7 @@
 
     interface CurrencyProps {
         isRequired: boolean;
-        label: string;
+        title: string;
     }
     @Component({
         components: {
@@ -21,7 +21,7 @@
     })
     export default class CurrencyInput extends Vue {
         @Prop({default: null}) public params: CurrencyProps;
-        @Prop({default: null}) public inputValue: string | null;
+        @Prop({default: null}) public data: string | null;
 
         public value: string = '';
         public moneyConfig = {
@@ -44,11 +44,11 @@
                 this.value = newValue;
             }
             if (newValue !== null) {
-                if (newValue !== this.inputValue) {
+                if (newValue !== this.data) {
                     this.$emit('onChange', newValue, null);
                 }
             } else {
-                const errorMessage = this.params.isRequired ? this.params.label + ' cannot be blank' : null;
+                const errorMessage = this.params.isRequired ? this.params.title + ' cannot be blank' : null;
                 this.$emit('onChange', null, errorMessage);
             }
         }

@@ -9,7 +9,9 @@ $normal-text: 14px;
 .faux-input {
   border: 1px solid $smoke;
   color: $lead;
-  padding: 10px;
+  width: 100%;
+  height: 26px;
+  line-height: 26px;
   margin: 0;
   background: transparent;
   font-size: $normal-text;

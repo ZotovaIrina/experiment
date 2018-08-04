@@ -1,11 +1,11 @@
 <template>
     <div class="input-error-container">
-        <masked-input v-model="phoneValue"
-                      mask="(111) 111-1111"
+        <masked-input v-model="numberValue"
+                      mask="111111111111111111111111"
                       class="faux-input"
                       :required="params.isRequired"
                       @blur.native="onBlurFunction"
-                      placeholder="(XXX) XXX-XXXX"/>
+                      placeholder=""/>
     </div>
 </template>
 
@@ -13,7 +13,7 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import MaskedInput from 'vue-masked-input';
 
-    interface PhoneProps {
+    interface NumberProps {
         isRequired: boolean;
         title: string;
     }
@@ -23,24 +23,21 @@
             MaskedInput
         }
     })
-    export default class PhoneInput extends Vue {
-        @Prop({default: false}) public params: PhoneProps;
+    export default class NumberInput extends Vue {
+        @Prop({default: false}) public params: NumberProps;
         @Prop({default: null}) public data: string | null;
 
         public value: string | null = this.data;
         public errorMessage: string | null = 'error';
 
-        get phoneValue(): string | null {
+        get numberValue(): string | null {
             return this.value;
         }
 
-        set phoneValue(newValue: string | null) {
+        set numberValue(newValue: string | null) {
             this.value = newValue;
-            if (newValue !== null && !newValue.includes('_')) {
-                const valueWithoutMask = newValue.replace(/\D/g, '');
-                if (valueWithoutMask !== this.data) {
-                    this.$emit('onChange', valueWithoutMask);
-                }
+            if (newValue !== null) {
+                this.$emit('onChange', newValue);
             } else if (newValue === null) {
                 const errorMessage = this.params.isRequired ? this.params.title + ' cannot be blank' : null;
                 this.$emit('onChange', null, errorMessage);

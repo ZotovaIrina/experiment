@@ -1,10 +1,9 @@
 <template>
     <div class="hello">
         <form name="applicationForm">
-            <InputField v-for="field in fieldArray"
-                        :params="field"
-                        :inputValue="getParams(field.dataPath)"
-                        @onChange="setValue"/>
+            <GroupFields :params="formConfig()"
+                         :data="getData"
+                         @onChange="setValue"/>
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -14,13 +13,13 @@
 
     import {Component, Vue} from 'vue-property-decorator';
     import {Getter, Action} from 'vuex-class';
-    import InputField from '@/components/fields/InputField.vue';
     import {FormPayload, SearchReportType} from '../store/searchReportStore';
     import {DeedDocumentMap} from '../store/types/DeedDocumentType';
+    import GroupFields from '@/components/fields/GroupFields.vue';
 
     @Component({
         components: {
-            InputField
+            GroupFields
         }
     })
     export default class Application extends Vue {
@@ -31,8 +30,12 @@
             return Object.keys(this.formConfig()).map((key) => this.formConfig()[key as any]);
         }
 
-        public getParams(fieldID: string) {
-            return this.getData()[this.formConfig()[fieldID].dataPath];
+        public getParams(fieldID: string | null) {
+            if (fieldID === null) {
+                return null;
+            } else {
+                return this.getData[this.formConfig()[fieldID].dataPath];
+            }
         }
 
         public setValue(payload: FormPayload) {
@@ -40,39 +43,108 @@
         }
 
         private formConfig() {
-            return {
-                currentDay: {
-                    type: 'calendar',
-                    label: 'Current date',
-                    dataPath: 'currentDay',
-                    isRequired: true
-                },
-                phone: {
-                    type: 'phone',
-                    label: 'Phone',
-                    dataPath: 'phone',
-                    isRequired: false
-                },
-                deedDocumentType: {
-                    type: 'selectOption',
-                    label: 'Document type',
-                    options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
-                    emptyValue: true,
-                    placeHolder: 'Select',
-                    isRequired: true,
-                    dataPath: 'deedDocumentType'
-                },
-                currency: {
-                    type: 'currency',
-                    label: 'Price',
-                    dataPath: 'currency',
-                    isRequired: false
-                }
 
+            return {
+                fields: {
+                    summary: {
+                        type: 'group',
+                        layout: 'column',
+                        title: 'Summary',
+                        dataPath: null,
+                        fields: {
+                            line1: {
+                                type: 'group',
+                                layout: 'row',
+                                fields: {
+                                    openMortgages: {
+                                        type: 'number',
+                                        title: 'Open mortgages',
+                                        dataPath: 'openMortgages',
+                                        isRequired: false
+                                    },
+                                    bankruptcies: {
+                                        type: 'number',
+                                        title: 'Bankruptcies',
+                                        dataPath: 'bankruptcies',
+                                        isRequired: false
+                                    },
+                                    judgements: {
+                                        type: 'number',
+                                        title: 'judgements',
+                                        dataPath: 'judgements',
+                                        isRequired: false
+                                    },
+                                    otherLiens: {
+                                        type: 'number',
+                                        title: 'otherLiens',
+                                        dataPath: 'otherLiens',
+                                        isRequired: false
+                                    }
+                                }
+                            },
+                            currentDay: {
+                                type: 'calendar',
+                                title: 'Current date',
+                                dataPath: 'currentDay',
+                                isRequired: true
+                            }
+                        }
+                    },
+                    mortgageInformation: {
+                        type: 'array',
+                        title: 'Mortgage information',
+                        dataPath: 'mortgageInformation',
+                        fields: {
+                            documentType: {
+                                type: 'selectOption',
+                                title: 'Document type',
+                                options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
+                                emptyValue: true,
+                                placeHolder: 'Select',
+                                isRequired: true,
+                                dataPath: 'deedDocumentType'
+                            },
+                            mortgageDate: {
+                                type: 'calendar',
+                                title: 'Mortgage date',
+                                dataPath: 'mortgageDate',
+                                isRequired: false
+                            }
+                        }
+                    },
+                    currentDay: {
+                        type: 'calendar',
+                        title: 'Current date',
+                        dataPath: 'currentDay',
+                        isRequired: true
+
+                    },
+                    phone: {
+                        type: 'phone',
+                        title: 'Phone',
+                        dataPath: 'phone',
+                        isRequired: false
+                    },
+                    deedDocumentType: {
+                        type: 'selectOption',
+                        title: 'Document type',
+                        options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
+                        emptyValue: true,
+                        placeHolder: 'Select',
+                        isRequired: true,
+                        dataPath: 'deedDocumentType'
+                    },
+                    currency: {
+                        type: 'currency',
+                        title: 'Price',
+                        dataPath: 'currency',
+                        isRequired: false
+                    }
+                }
             };
         }
 
-        private getData() {
+        get getData() {
             return this.getSearchReportData;
         }
     }

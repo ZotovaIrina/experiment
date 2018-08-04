@@ -19,7 +19,7 @@
                     </div>
                     <div class="calendar__header-text">
                         <SelectOption :params="{
-                                        inputValue:getMonthName,
+                                        data:getMonthName,
                                         options: monthList,
                                         emptyValue: false}"
                                       @onChange="changeMonth"/>
@@ -69,12 +69,12 @@
         @Prop({
             default() {
                 return {
-                    inputValue: null,
+                    data: null,
                     isRequired: false
                 };
             }
         }) public params: CalendarProps;
-        @Prop({default: null}) public inputValue: string | null;
+        @Prop({default: null}) public data: string | null;
 
         public showCalendar: boolean = false;
         public value: string | null = null;
@@ -113,8 +113,8 @@
         }
 
         get getNewValues() {
-            if (this.inputValue !== null && DateTime.fromISO(this.inputValue).isValid) {
-                return DateTime.fromISO(this.inputValue);
+            if (this.data !== null && DateTime.fromISO(this.data).isValid) {
+                return DateTime.fromISO(this.data);
             } else {
                 return DateTime.local();
             }
@@ -157,14 +157,14 @@
         }
 
         public isSelectedDay(day: number) {
-            if (this.inputValue === null) {
+            if (this.data === null) {
                 return this.year === DateTime.local().year &&
                     this.month === DateTime.local().month - 1 &&
                     day === DateTime.local().day;
             } else {
-                return this.year === DateTime.fromISO(this.inputValue).year &&
-                    this.month === DateTime.fromISO(this.inputValue).month - 1 &&
-                    day === DateTime.fromISO(this.inputValue).day;
+                return this.year === DateTime.fromISO(this.data).year &&
+                    this.month === DateTime.fromISO(this.data).month - 1 &&
+                    day === DateTime.fromISO(this.data).day;
             }
         }
 
@@ -175,8 +175,8 @@
 
         get getValue() {
             console.log('getValue');
-            if (this.inputValue !== null && DateTime.fromISO(this.inputValue).isValid) {
-                return DateTime.fromISO(this.inputValue).toFormat('MM/dd/yyyy');
+            if (this.data !== null && DateTime.fromISO(this.data).isValid) {
+                return DateTime.fromISO(this.data).toFormat('MM/dd/yyyy');
             } else {
                 return null;
             }

@@ -2,6 +2,10 @@ import {GetterTree, MutationTree, ActionTree, ActionContext} from 'vuex';
 import {USState} from '@/store/types/USState';
 
 export interface SearchReportType {
+    openMortgages: number | null;
+    bankruptcies: number | null;
+    judgements: number | null;
+    otherLiens: number | null;
     currentDate: string | null;
     deedDocumentType: string | null;
     state: USState | null;
@@ -15,11 +19,15 @@ export interface FormPayload {
 }
 
 const searchReportState: SearchReportType = {
-    currentDate: null,
+    openMortgages: 1,
+    bankruptcies: 2,
+    judgements: 3,
+    otherLiens: 4,
+    currentDate: '2018-02-02',
     deedDocumentType: null,
     state: null,
     phone: '1111111111',
-    currency: null
+    currency: 10000000
 };
 
 const gettersSearchReport: GetterTree<SearchReportType, any> = {

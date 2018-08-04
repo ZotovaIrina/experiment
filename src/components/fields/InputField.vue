@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <span>{{labelText}}</span>
+    <div class="input-field">
+        <span>{{titleText}}</span>
         <component v-bind:is="fieldComponent"
                    @onChange="setValue"
-                   :inputValue="inputValue"
+                   :data="data"
                    :params="fieldParams"></component>
         <span>{{errorMessage}}</span>
     </div>
@@ -15,13 +15,14 @@
     import CalendarInput from '@/components/fields/CalendarInput.vue';
     import SelectOption from '@/components/fields/SelectOption.vue';
     import CurrencyInput from '@/components/fields/CurrencyInput.vue';
+    import NumberInput from '@/components/fields/NumberInput.vue';
     import {FormPayload} from '../../store/searchReportStore';
 
-    interface InputParams {
+    export interface InputParams {
         isRequired: boolean;
-        label: string;
+        title: string;
         type: string;
-        inputValue: any;
+        data: any;
         dataPath: string;
     }
 
@@ -29,17 +30,18 @@
         components: {
             CalendarInput,
             SelectOption,
-            CurrencyInput
+            CurrencyInput,
+            NumberInput
         }
     })
     export default class InputField extends Vue {
         @Prop() public params: InputParams;
-        @Prop() public inputValue: any;
+        @Prop() public data: any;
 
         public errorMessage: string | null = '';
 
-        get labelText() {
-            return this.params.isRequired ? this.params.label + ' *' : this.params.label;
+        get titleText() {
+            return this.params.isRequired ? this.params.title + ' *' : this.params.title;
         }
 
         get fieldComponent() {
@@ -47,7 +49,8 @@
                 phone: PhoneInput,
                 calendar: CalendarInput,
                 selectOption: SelectOption,
-                currency: CurrencyInput
+                currency: CurrencyInput,
+                number: NumberInput
             };
             return componentMap[this.params.type];
         }
@@ -67,3 +70,16 @@
     }
 
 </script>
+
+<style lang="scss">
+    .input-field {
+        flex-grow: 1;
+        padding: 0 8px;
+        &:first-child{
+            padding-left: 0;
+        }
+        &:last-child{
+            padding-right: 0;
+        }
+    }
+</style>

@@ -6,7 +6,7 @@
 
         <div class="input-error-container">
             <input :placeholder="params.placeHolder"
-                   :value="inputValue"
+                   :value="data"
                    :required="params.isRequired"
                    v-on:click="optionsListTrigger"
                    class="faux-input"/>
@@ -38,21 +38,21 @@
         options: string[];
         placeHolder: string;
         emptyValue: boolean;
-        label: string;
+        title: string;
     }
 
     @Component({})
     export default class SelectOption extends Vue {
         @Prop({
             default: {
-                inputValue: null,
+                data: null,
                 isRequired: false,
                 options: [],
                 placeHolder: 'Select',
                 emptyValue: true
             }
         }) public params: SelectOptionProps;
-        @Prop({default: null}) public inputValue: string | null;
+        @Prop({default: null}) public data: string | null;
 
         public hideOptionsList: boolean = true;
 
@@ -66,9 +66,9 @@
             this.optionsListTrigger();
 
             if (newValue === null && this.params.isRequired) {
-                this.$emit('onChange', null, this.params.label + ' cannot be blank');
+                this.$emit('onChange', null, this.params.title + ' cannot be blank');
             } else if (newValue !== null && this.params.options.indexOf(newValue) === -1) {
-                this.$emit('onChange', null, 'Invalid ' + this.params.label.toLowerCase());
+                this.$emit('onChange', null, 'Invalid ' + this.params.title.toLowerCase());
             } else {
                 this.$emit('onChange', newValue, null);
             }
