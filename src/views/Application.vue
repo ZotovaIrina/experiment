@@ -46,50 +46,50 @@
 
             return {
                 fields: {
-                    // summary: {
-                    //     type: 'group',
-                    //     layout: 'column',
-                    //     title: 'Summary',
-                    //     dataPath: null,
-                    //     fields: {
-                    //         line1: {
-                    //             type: 'group',
-                    //             layout: 'row',
-                    //             fields: {
-                    //                 openMortgages: {
-                    //                     type: 'number',
-                    //                     title: 'Open mortgages',
-                    //                     dataPath: 'openMortgages',
-                    //                     isRequired: false
-                    //                 },
-                    //                 bankruptcies: {
-                    //                     type: 'number',
-                    //                     title: 'Bankruptcies',
-                    //                     dataPath: 'bankruptcies',
-                    //                     isRequired: false
-                    //                 },
-                    //                 judgements: {
-                    //                     type: 'number',
-                    //                     title: 'judgements',
-                    //                     dataPath: 'judgements',
-                    //                     isRequired: false
-                    //                 },
-                    //                 otherLiens: {
-                    //                     type: 'number',
-                    //                     title: 'otherLiens',
-                    //                     dataPath: 'otherLiens',
-                    //                     isRequired: false
-                    //                 }
-                    //             }
-                    //         },
-                    //         currentDay: {
-                    //             type: 'calendar',
-                    //             title: 'Current date',
-                    //             dataPath: 'currentDay',
-                    //             isRequired: true
-                    //         }
-                    //     }
-                    // },
+                    summary: {
+                        type: 'group',
+                        layout: 'column',
+                        title: 'Summary',
+                        dataPath: null,
+                        fields: {
+                            line1: {
+                                type: 'group',
+                                layout: 'row',
+                                fields: {
+                                    openMortgages: {
+                                        type: 'number',
+                                        title: 'Open mortgages',
+                                        dataPath: 'openMortgages',
+                                        isRequired: false
+                                    },
+                                    bankruptcies: {
+                                        type: 'number',
+                                        title: 'Bankruptcies',
+                                        dataPath: 'bankruptcies',
+                                        isRequired: false
+                                    },
+                                    judgements: {
+                                        type: 'number',
+                                        title: 'judgements',
+                                        dataPath: 'judgements',
+                                        isRequired: false
+                                    },
+                                    otherLiens: {
+                                        type: 'number',
+                                        title: 'otherLiens',
+                                        dataPath: 'otherLiens',
+                                        isRequired: false
+                                    }
+                                }
+                            },
+                            currentDay: {
+                                type: 'calendar',
+                                title: 'Current date',
+                                dataPath: 'currentDay',
+                                isRequired: true
+                            }
+                        }
+                    },
                     mortgageInformation: {
                         type: 'array',
                         title: 'Mortgage information',
@@ -113,35 +113,35 @@
                             }
                         }
                     }
-                    // ,
-                    // currentDay: {
-                    //     type: 'calendar',
-                    //     title: 'Current date',
-                    //     dataPath: 'currentDay',
-                    //     isRequired: true
-                    //
-                    // },
-                    // phone: {
-                    //     type: 'phone',
-                    //     title: 'Phone',
-                    //     dataPath: 'phone',
-                    //     isRequired: false
-                    // },
-                    // deedDocumentType: {
-                    //     type: 'selectOption',
-                    //     title: 'Document type',
-                    //     options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
-                    //     emptyValue: true,
-                    //     placeHolder: 'Select',
-                    //     isRequired: true,
-                    //     dataPath: 'deedDocumentType'
-                    // },
-                    // currency: {
-                    //     type: 'currency',
-                    //     title: 'Price',
-                    //     dataPath: 'currency',
-                    //     isRequired: false
-                    // }
+                    ,
+                    currentDay: {
+                        type: 'calendar',
+                        title: 'Current date',
+                        dataPath: 'currentDay',
+                        isRequired: true
+
+                    },
+                    phone: {
+                        type: 'phone',
+                        title: 'Phone',
+                        dataPath: 'phone',
+                        isRequired: false
+                    },
+                    deedDocumentType: {
+                        type: 'selectOption',
+                        title: 'Document type',
+                        options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
+                        emptyValue: true,
+                        placeHolder: 'Select',
+                        isRequired: true,
+                        dataPath: 'deedDocumentType'
+                    },
+                    currency: {
+                        type: 'currency',
+                        title: 'Price',
+                        dataPath: 'currency',
+                        isRequired: false
+                    }
                 }
             };
         }

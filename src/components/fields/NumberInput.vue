@@ -24,9 +24,9 @@
     })
     export default class NumberInput extends Vue {
         @Prop({default: false}) public params: NumberProps;
-        @Prop({default: null}) public data: string | null;
+        @Prop({default: null}) public data: number | null;
 
-        public value: string | null = this.data;
+        public value: string | null = this.data === null || this.data === undefined ? null : this.data.toString();
         public errorMessage: string | null = 'error';
 
         get numberValue(): string | null {
