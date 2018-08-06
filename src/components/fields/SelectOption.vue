@@ -7,7 +7,6 @@
         <div class="input-error-container">
             <input :placeholder="params.placeHolder"
                    :value="data"
-                   :required="params.isRequired"
                    v-on:click="optionsListTrigger"
                    class="faux-input"/>
             <img :src="caretdd"

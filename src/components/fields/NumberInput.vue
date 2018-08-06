@@ -3,7 +3,6 @@
         <masked-input v-model="numberValue"
                       mask="111111111111111111111111"
                       class="faux-input"
-                      :required="params.isRequired"
                       @blur.native="onBlurFunction"
                       placeholder=""/>
     </div>

@@ -4,7 +4,6 @@
             <masked-input :value="getValue"
                           mask="11/11/1111"
                           class="faux-input"
-                          :required="params.isRequired"
                           placeholder="MM/DD/YYYY"/>
             <img :src="caretdd"
                  class="calendar-input__close"

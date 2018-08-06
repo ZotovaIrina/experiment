@@ -3,7 +3,6 @@
         <masked-input v-model="phoneValue"
                       mask="(111) 111-1111"
                       class="faux-input"
-                      :required="params.isRequired"
                       @blur.native="onBlurFunction"
                       placeholder="(XXX) XXX-XXXX"/>
     </div>

@@ -1,20 +1,20 @@
 <template>
     <div class="group-fields"
          :class="{'group-fields--row': params.layout === 'row'}">
-        <span>{{params.groupTitle}}</span>
+        <span>{{params.title}}</span>
         <div class="group-fields__fields">
-        <component v-for="field in fieldArray"
-                   :is="getComponent(field.type === 'group')"
-                   :params="field"
-                   :data="getData(field.dataPath)"
-                   @onChange="onChange"></component>
+            <component v-for="field in fieldArray"
+                       :is="getComponent(field.type === 'group')"
+                       :params="field"
+                       :data="getData(field.dataPath)"
+                       @onChange="onChange"></component>
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import InputField, {InputParams} from '@/components/fields/InputField.vue';
+    import InputField from '@/components/fields/InputField.vue';
 
     interface GroupParams {
         title: string | null;
@@ -25,17 +25,16 @@
     @Component({
         components: {
             InputField,
-            GroupFields
-        },
-        name: 'GroupFields'
+            GroupField
+        }
     })
-    export default class GroupFields extends Vue {
+    export default class GroupField extends Vue {
         @Prop() public params: GroupParams;
-        @Prop() public data: GroupParams;
+        @Prop() public data: any;
 
         constructor() {
             super();
-            console.log('GroupFields');
+            console.log('GroupField');
         }
 
         get fieldArray() {
@@ -46,15 +45,14 @@
             return dataPath ? this.data[dataPath] : this.data;
         }
 
-        public getComponent(isGroup){
-            return isGroup ? GroupFields : InputField;
+        public getComponent(isGroup) {
+            return isGroup ? GroupField : InputField;
         }
 
         public onChange(payload: any) {
             this.$emit('onChange', payload);
         }
     }
-
 </script>
 
 <style lang="scss">

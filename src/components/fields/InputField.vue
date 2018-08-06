@@ -16,6 +16,7 @@
     import SelectOption from '@/components/fields/SelectOption.vue';
     import CurrencyInput from '@/components/fields/CurrencyInput.vue';
     import NumberInput from '@/components/fields/NumberInput.vue';
+    import ArrayField from '@/components/fields/ArrayField.vue';
     import {FormPayload} from '../../store/searchReportStore';
 
     export interface InputParams {
@@ -31,7 +32,8 @@
             CalendarInput,
             SelectOption,
             CurrencyInput,
-            NumberInput
+            NumberInput,
+            ArrayField
         }
     })
     export default class InputField extends Vue {
@@ -50,7 +52,8 @@
                 calendar: CalendarInput,
                 selectOption: SelectOption,
                 currency: CurrencyInput,
-                number: NumberInput
+                number: NumberInput,
+                array: ArrayField
             };
             return componentMap[this.params.type];
         }

@@ -1,7 +1,6 @@
 <template>
     <div class="input-error-container">
         <money v-model="currencyValue"
-               :required="params.isRequired"
                v-bind="moneyConfig"></money>
     </div>
 </template>
