@@ -11,6 +11,7 @@ export interface SearchReportType {
     state: USState | null;
     phone: string | null;
     currency: number | null;
+    data: any
 }
 
 export interface FormPayload {
@@ -27,16 +28,20 @@ const searchReportState: SearchReportType = {
     deedDocumentType: null,
     state: null,
     phone: '1111111111',
-    currency: 10000000
+    currency: 10000000,
+    data: {}
 };
 
 const gettersSearchReport: GetterTree<SearchReportType, any> = {
-    getSearchReportData: (state: SearchReportType) => state
+    getSearchReportData: (state: SearchReportType) => state.data
 };
 
 const mutationsSearchReport: MutationTree<any> = {
     setSearchReportValue: (state, payload: FormPayload) => {
-        searchReportState[payload.field] = payload.data;
+        searchReportState.data = {
+            ...searchReportState.data,
+            ...payload
+        };
     }
 };
 

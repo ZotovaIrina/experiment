@@ -63,7 +63,7 @@
 
         public optionClick(newValue: string | null) {
             this.optionsListTrigger();
-
+            console.log('$emit', newValue);
             if (newValue === null && this.params.isRequired) {
                 this.$emit('onChange', null, this.params.title + ' cannot be blank');
             } else if (newValue !== null && this.params.options.indexOf(newValue) === -1) {

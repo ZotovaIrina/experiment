@@ -6,8 +6,8 @@
                             fields: params.fields,
                             title: getItemTitle(index + 1)
                         }"
-                        :data="{}"
-                        @onChange="onChange(index)" />
+                        :data="item"
+                        @onChange="onChange(index, $event)"/>
         </div>
         <a @click="addItem()">Add</a>
     </div>
@@ -49,8 +49,11 @@
             this.data.push({});
         }
 
-        public onChange(index) {
-            return (payload: any) => console.log('change', index, payload);
+        public onChange(index, payload) {
+            console.log('change', index, payload);
+            let newData = [...this.data];
+            newData[index] = payload;
+            this.$emit('onChange', newData);
         }
     }
 

@@ -7,7 +7,7 @@
                        :is="getComponent(field.type === 'group')"
                        :params="field"
                        :data="getData(field.dataPath)"
-                       @onChange="onChange"></component>
+                       @onChange="onChange(field, $event)"></component>
         </div>
     </div>
 </template>
@@ -49,8 +49,12 @@
             return isGroup ? GroupField : InputField;
         }
 
-        public onChange(payload: any) {
-            this.$emit('onChange', payload);
+        public onChange(field, payload: any) {
+            console.log('onChange Group', field, payload);
+            this.$emit('onChange',
+                {
+                    [field.dataPath]: payload
+                });
         }
     }
 </script>

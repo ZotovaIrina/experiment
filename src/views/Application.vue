@@ -39,6 +39,7 @@
         }
 
         public setValue(payload: FormPayload) {
+            console.log('form', payload);
             return this.setSearchReportValue(payload);
         }
 
@@ -114,13 +115,6 @@
                         }
                     }
                     ,
-                    currentDay: {
-                        type: 'calendar',
-                        title: 'Current date',
-                        dataPath: 'currentDay',
-                        isRequired: true
-
-                    },
                     phone: {
                         type: 'phone',
                         title: 'Phone',

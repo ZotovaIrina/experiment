@@ -63,12 +63,9 @@
         }
 
         public setValue(newValue: any, errorMessage: string | null) {
+            console.log('InputField ', newValue);
             this.errorMessage = errorMessage;
-            const payload: FormPayload = {
-                field: this.params.dataPath,
-                data: newValue
-            };
-            this.$emit('onChange', payload);
+            this.$emit('onChange', newValue);
         }
     }
 
