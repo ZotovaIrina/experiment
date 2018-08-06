@@ -11,7 +11,7 @@ export interface SearchReportType {
     state: USState | null;
     phone: string | null;
     currency: number | null;
-    data: any
+    data: any;
 }
 
 export interface FormPayload {

@@ -51,7 +51,7 @@
 
         public onChange(index, payload) {
             console.log('change', index, payload);
-            let newData = [...this.data];
+            const newData = [...this.data];
             newData[index] = payload;
             this.$emit('onChange', newData);
         }
