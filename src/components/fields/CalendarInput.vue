@@ -248,12 +248,12 @@
             line-height: 40px;
         }
         &__day:hover {
-            background-color: $spruce-primary;
+            background-color: $primary;
             color: white;
         }
 
         &__selected {
-            background-color: $spruce-primary;
+            background-color: $primary;
             color: white;
         }
 

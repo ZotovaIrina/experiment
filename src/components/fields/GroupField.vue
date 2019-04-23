@@ -42,7 +42,9 @@
         }
 
         public getData(dataPath) {
-            return dataPath ? this.data[dataPath] : this.data;
+            let data = dataPath ? this.data[dataPath] : this.data;
+            console.log(data);
+            return data === undefined ? this.data : data;
         }
 
         public getComponent(isGroup) {

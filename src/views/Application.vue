@@ -46,12 +46,11 @@
         private formConfig() {
 
             return {
-                fields: {
+                 fields: {
                     summary: {
                         type: 'group',
                         layout: 'column',
                         title: 'Summary',
-                        dataPath: null,
                         fields: {
                             line1: {
                                 type: 'group',
@@ -91,52 +90,51 @@
                             }
                         }
                     },
-                    mortgageInformation: {
-                        type: 'array',
-                        title: 'Mortgage information',
-                        dataPath: 'mortgageInformation',
-                        itemTitle: 'Mortgage No.$index',
-                        fields: {
-                            documentType: {
-                                type: 'selectOption',
-                                title: 'Document type',
-                                options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
-                                emptyValue: false,
-                                placeHolder: 'Select',
-                                isRequired: true,
-                                dataPath: 'deedDocumentType'
-                            },
-                            mortgageDate: {
-                                type: 'calendar',
-                                title: 'Mortgage date',
-                                dataPath: 'mortgageDate',
-                                isRequired: false
-                            }
-                        }
-                    }
-                    ,
-                    phone: {
-                        type: 'phone',
-                        title: 'Phone',
-                        dataPath: 'phone',
-                        isRequired: false
-                    },
-                    deedDocumentType: {
-                        type: 'selectOption',
-                        title: 'Document type',
-                        options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
-                        emptyValue: true,
-                        placeHolder: 'Select',
-                        isRequired: true,
-                        dataPath: 'deedDocumentType'
-                    },
-                    currency: {
-                        type: 'currency',
-                        title: 'Price',
-                        dataPath: 'currency',
-                        isRequired: false
-                    }
-                }
+                    // mortgageInformation: {
+                    //     type: 'array',
+                    //     title: 'Mortgage information',
+                    //     dataPath: 'mortgageInformation',
+                    //     itemTitle: 'Mortgage No.$index',
+                    //     fields: {
+                    //         documentType: {
+                    //             type: 'selectOption',
+                    //             title: 'Document type',
+                    //             options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
+                    //             emptyValue: false,
+                    //             placeHolder: 'Select',
+                    //             isRequired: true,
+                    //             dataPath: 'deedDocumentType'
+                    //         },
+                    //         mortgageDate: {
+                    //             type: 'calendar',
+                    //             title: 'Mortgage date',
+                    //             dataPath: 'mortgageDate',
+                    //             isRequired: false
+                    //         }
+                    //     }
+                    // },
+                    // phone: {
+                    //     type: 'phone',
+                    //     title: 'Phone',
+                    //     dataPath: 'phone',
+                    //     isRequired: false
+                    // },
+                    // deedDocumentType: {
+                    //     type: 'selectOption',
+                    //     title: 'Document type',
+                    //     options: Object.keys(DeedDocumentMap).map((key) => DeedDocumentMap[key as any]),
+                    //     emptyValue: true,
+                    //     placeHolder: 'Select',
+                    //     isRequired: true,
+                    //     dataPath: 'deedDocumentType'
+                    // },
+                    // currency: {
+                    //     type: 'currency',
+                    //     title: 'Price',
+                    //     dataPath: 'currency',
+                    //     isRequired: false
+                    // }
+                 }
             };
         }
 

@@ -1,16 +1,8 @@
 import {GetterTree, MutationTree, ActionTree, ActionContext} from 'vuex';
 import {USState} from '@/store/types/USState';
+import {Vue} from 'vue-property-decorator';
 
 export interface SearchReportType {
-    openMortgages: number | null;
-    bankruptcies: number | null;
-    judgements: number | null;
-    otherLiens: number | null;
-    currentDate: string | null;
-    deedDocumentType: string | null;
-    state: USState | null;
-    phone: string | null;
-    currency: number | null;
     data: any;
 }
 
@@ -20,15 +12,6 @@ export interface FormPayload {
 }
 
 const searchReportState: SearchReportType = {
-    openMortgages: 1,
-    bankruptcies: 2,
-    judgements: 3,
-    otherLiens: 4,
-    currentDate: '2018-02-02',
-    deedDocumentType: null,
-    state: null,
-    phone: '1111111111',
-    currency: 10000000,
     data: {}
 };
 
@@ -37,11 +20,18 @@ const gettersSearchReport: GetterTree<SearchReportType, any> = {
 };
 
 const mutationsSearchReport: MutationTree<any> = {
-    setSearchReportValue: (state, payload: FormPayload) => {
-        searchReportState.data = {
-            ...searchReportState.data,
-            ...payload
-        };
+     setSearchReportValue: (state, payload: FormPayload) => {
+    //     searchReportState.data = {
+    //         ...searchReportState.data,
+    //         ...payload
+    //     };
+        for (var key in payload) {
+            console.log('searchReportState.data',key,  searchReportState.data[key]);
+            Vue.set(searchReportState.data, key, payload[key]);
+            console.log('searchReportState.data',key,  searchReportState.data[key]);
+        }
+
+        //  for (const attrname in payload) { searchReportState.data[attrname] = payload[attrname]; }
     }
 };
 

@@ -131,12 +131,12 @@
         }
 
         &__item:hover {
-            background-color: $spruce-primary;
+            background-color: $primary;
             color: white;
         }
 
         &__placeholder:hover {
-            background-color: $spruce-primary;
+            background-color: $primary;
             color: white;
         }
 

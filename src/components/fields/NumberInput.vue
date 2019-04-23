@@ -1,10 +1,9 @@
 <template>
     <div class="input-error-container">
-        <masked-input v-model="numberValue"
-                      mask="111111111111111111111111"
-                      class="faux-input"
-                      @blur.native="onBlurFunction"
-                      placeholder=""/>
+        <input v-model="numberValue"
+               class="faux-input"
+               @blur="onBlurFunction"
+               placeholder=""/>
     </div>
 </template>
 
@@ -26,27 +25,27 @@
         @Prop({default: false}) public params: NumberProps;
         @Prop({default: null}) public data: number | null;
 
-        public value: string | null = this.data === null || this.data === undefined ? null : this.data.toString();
+        public value: number | null = this.data ? this.data : null;
         public errorMessage: string | null = 'error';
 
-        get numberValue(): string | null {
+        get numberValue(): number | null {
             return this.value;
         }
 
-        set numberValue(newValue: string | null) {
-            this.value = newValue;
-            if (newValue !== null) {
-                this.$emit('onChange', newValue);
-            } else if (newValue === null) {
+        set numberValue(newValue: number | null) {
+            const newNumberValue = newValue === null ? null : newValue.toString().replace(/\D/g, '');
+            if (newNumberValue === null || '') {
                 const errorMessage = this.params.isRequired ? this.params.title + ' cannot be blank' : null;
+                this.value = null;
                 this.$emit('onChange', null, errorMessage);
+            } else {
+                this.value = +newNumberValue;
+                this.$emit('onChange', +newNumberValue);
             }
         }
 
         public onBlurFunction() {
-            if (this.value !== null && this.value.indexOf('_') !== -1) {
-                this.$emit('onChange', null, 'Invalid ' + this.params.title.toLowerCase());
-            }
+
         }
 
     }

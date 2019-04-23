@@ -20,9 +20,9 @@
     })
     export default class CurrencyInput extends Vue {
         @Prop({default: null}) public params: CurrencyProps;
-        @Prop({default: null}) public data: string | null;
+        @Prop({default: null}) public data: number | null;
 
-        public value: string = '';
+        public value: number = 0;
         public moneyConfig = {
             decimal: '.',
             thousands: ',',
@@ -32,13 +32,13 @@
             masked: false
         };
 
-        get currencyValue(): string | null {
+        get currencyValue(): number | null {
             return this.value;
         }
 
-        set currencyValue(newValue: string | null) {
-            if (newValue === null) {
-                this.value = '';
+        set currencyValue(newValue: number | null) {
+            if (newValue === null || 0) {
+                this.value = 0;
             } else {
                 this.value = newValue;
             }
@@ -48,7 +48,9 @@
                 }
             } else {
                 const errorMessage = this.params.isRequired ? this.params.title + ' cannot be blank' : null;
-                this.$emit('onChange', null, errorMessage);
+                if (newValue !== this.data) {
+                    this.$emit('onChange', null, errorMessage);
+                }
             }
         }
 

@@ -36,7 +36,8 @@
         set phoneValue(newValue: string | null) {
             this.value = newValue;
             if (newValue !== null && !newValue.includes('_')) {
-                const valueWithoutMask = newValue.replace(/\D/g, '');
+                let valueWithoutMask: string | null = newValue.replace(/\D/g, '');
+                valueWithoutMask = valueWithoutMask === '' ? null : valueWithoutMask;
                 if (valueWithoutMask !== this.data) {
                     this.$emit('onChange', valueWithoutMask);
                 }
